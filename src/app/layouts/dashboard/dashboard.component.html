@@ -1,0 +1,34 @@
+<mat-drawer-container class="dashboard-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <p class="text-center m-1">Secciones</p>
+    <div class="row m-2">
+      <button class="btn btn-secondary">Registrate</button>
+    </div>
+    <div class="row m-2">
+      <button class="btn btn-secondary">Ingresar</button>
+    </div>
+    <div class="row m-2">
+      <button class="btn btn-secondary">ABM usuarios</button>
+    </div>
+  </mat-drawer>
+
+  <mat-toolbar color="primary">
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with menu icon"
+      (click)="drawer.toggle()"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="w-100" style="text-align: center; font-weight: bold;" appFontSize size="24px"
+      >ABM de usuarios</span
+    >
+    <div></div>
+    <div>
+      <span>{{ fecha | date : "EEEE dd/MM/yyyy HH:mm" }}</span>
+    </div>
+  </mat-toolbar>
+
+  <app-users></app-users>
+</mat-drawer-container>
