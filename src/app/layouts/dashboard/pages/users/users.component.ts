@@ -19,7 +19,8 @@ export class UsersComponent {
   dataSource: UserInterface[] = [];
   tempUser: UserInterface[] = [];
   hide = true;
-  hideEdit = false;
+  hideEdit = true;
+  hideAdd = true;
   userEdit: UserInterface = {
     dni: '',
     firstName: '',
@@ -32,6 +33,7 @@ export class UsersComponent {
 
   onUserAdded(ev: UserInterface): void {
     this.dataSource = [...this.dataSource, { ...ev }];
+    this.hideAdd = true;
   }
 
   deleteUser(userDni: string) {
@@ -42,10 +44,10 @@ export class UsersComponent {
   }
 
   editUserFunc(user: UserInterface, j: number) {
-    console.log(this.userEdit);
     this.userEdit = { ...user };
     this.userEditIndex = j;
-    this.hideEdit = !this.hideEdit;
+    this.hideEdit = false;
+    this.hideAdd =  true;
   }
 
   cancelEditUser() {
@@ -59,6 +61,15 @@ export class UsersComponent {
     };
     this.userEditIndex = 0;
     this.hideEdit = !this.hideEdit;
+  }
+
+  cancelAddUser() {
+    this.hideAdd = true;
+  }
+
+  botonForm() {
+    this.hideAdd = false;
+    this.hideEdit = true;
   }
 
   updateUser() {

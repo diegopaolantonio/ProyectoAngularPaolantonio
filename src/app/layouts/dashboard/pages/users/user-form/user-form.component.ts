@@ -17,12 +17,12 @@ export class UserFormComponent {
 
   constructor(private fb: FormBuilder) {
     this.userForm = this.fb.group({
-      dni: this.fb.control('', Validators.required),
-      firstName: this.fb.control('', Validators.required),
-      lastName: this.fb.control('', Validators.required),
+      dni: this.fb.control('', [Validators.required]),
+      firstName: this.fb.control('', [Validators.required]),
+      lastName: this.fb.control('', [Validators.required]),
       email: this.fb.control('', [Validators.required, Validators.email]),
-      password: this.fb.control('', Validators.required),
-      role: this.fb.control('', Validators.required),
+      password: this.fb.control('', [Validators.required]),
+      role: this.fb.control('', [Validators.required]),
     });
   }
 
@@ -31,13 +31,14 @@ export class UserFormComponent {
       this.userForm.markAllAsTouched();
     } else {
       this.userAdded.emit(this.userForm.value);
-      this.userForm.reset({
-        dni: '',
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        role: '',
+      this.userForm.reset();
+      for (let name in this.userForm.controls) {
+        this.userForm.controls[name].setErrors(null);
+      }
+      Object.keys(this.userForm.controls).forEach((key) => {
+        const control = this.userForm.controls[key];
+        control.clearValidators();
+        control.updateValueAndValidity();
       });
     }
   }

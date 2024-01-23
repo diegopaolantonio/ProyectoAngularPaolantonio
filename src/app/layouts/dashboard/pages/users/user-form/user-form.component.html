@@ -1,5 +1,6 @@
 <div class="container m-2 w-100">
-  <form [formGroup]="userForm" (ngSubmit)="addUser()" class="row">
+  <form [formGroup]="userForm"  class="row">
+    <!-- (ngSubmit)="addUser()" -->
     <!-- DNI -->
     <div class="col-4">
       <mat-form-field class="w-100">
@@ -72,7 +73,7 @@
     </div>
 
     <div>
-      <button mat-flat-button color="primary">Agregar</button>
+      <button type="submit" mat-flat-button color="primary" (click)=addUser() >Agregar</button>
     </div>
   </form>
 

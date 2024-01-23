@@ -1,9 +1,30 @@
 <app-user-form
-  *ngIf="!hideEdit"
+  *ngIf="!hideAdd"
   (userAdded)="onUserAdded($event)"
 ></app-user-form>
 
-<div *ngIf="hideEdit" class="container m-2 w-100 row">
+<button
+      *ngIf="hideAdd"
+      class="m-2"
+      mat-flat-button
+      color="primary"
+      type="button"
+      (click)="botonForm()"
+    >
+      Formulario Crear usuario
+    </button>
+    <button
+      *ngIf="!hideAdd"
+      class="m-2"
+      mat-flat-button
+      color="accent"
+      type="button"
+      (click)="cancelAddUser()"
+    >
+      Cancelar
+    </button>
+
+<div *ngIf="!hideEdit" class="container m-2 w-100 row">
   <h2>Editar datos de usuario</h2>
 
   <!-- DNI -->
@@ -100,7 +121,7 @@
   </div>
 </div>
 
-<div *ngIf="!hideEdit" class="m-4">
+<div *ngIf="hideEdit" class="m-4">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- dni Column -->
     <ng-container matColumnDef="dni">
