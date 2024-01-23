@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserInterface } from '../models';
 
 @Component({
   selector: 'app-user-form',
@@ -12,9 +11,6 @@ export class UserFormComponent {
 
   // Password
   hide = true;
-
-  @Input()
-  tempUser: UserInterface[] = [];
 
   @Output()
   userAdded = new EventEmitter();
@@ -44,11 +40,5 @@ export class UserFormComponent {
         role: '',
       });
     }
-  }
-
-  onUserEdited(tempUsers: UserInterface): void {
-    console.log(tempUsers);
-    // console.log(this.userForm);
-    // this.dataSource = [...this.dataSource, { ...ev }];
   }
 }

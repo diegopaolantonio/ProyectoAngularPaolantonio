@@ -13,7 +13,7 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $proyectoAngularPaolantonio-primary: mat.define-palette(mat.$green-palette, 200);
-$proyectoAngularPaolantonio-accent: mat.define-palette(mat.$light-green-palette, 50);
+$proyectoAngularPaolantonio-accent: mat.define-palette(mat.$orange-palette, 200);
 
 // The warn palette is optional (defaults to red).
 $proyectoAngularPaolantonio-warn: mat.define-palette(mat.$red-palette);
