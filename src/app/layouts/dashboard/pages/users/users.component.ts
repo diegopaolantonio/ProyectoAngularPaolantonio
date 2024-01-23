@@ -16,13 +16,53 @@ export class UsersComponent {
     'role',
     'action',
   ];
-  dataSource: UserInterface[] = [];
+  dataSource: UserInterface[] = [{
+    dni: 11111111,
+    firstName: 'Juan',
+    lastName: 'Perez',
+    email: 'juan@mail.com',
+    password: '123456',
+    role: 'Admin',
+  },
+  {
+    dni: 22222222,
+    firstName: 'Pedro',
+    lastName: 'Martinez',
+    email: 'pedro@mail.com',
+    password: '123456',
+    role: 'Alumno',
+  },
+  {
+    dni: 33333333,
+    firstName: 'Alberto',
+    lastName: 'Gomez',
+    email: 'alberto@mail.com',
+    password: '123456',
+    role: 'Profesor',
+  },
+  {
+    dni: 44444444,
+    firstName: 'Fernando',
+    lastName: 'Vilca',
+    email: 'fernando@mail.com',
+    password: '123456',
+    role: 'Alumno',
+  },
+  {
+    dni: 55555555,
+    firstName: 'Franco',
+    lastName: 'Pereira',
+    email: 'franco@mail.com',
+    password: '123456',
+    role: 'Profesor',
+  },
+];
   tempUser: UserInterface[] = [];
   hide = true;
   hideEdit = true;
   hideAdd = true;
   userEdit: UserInterface = {
-    dni: '',
+    dni: 0,
     firstName: '',
     lastName: '',
     email: '',
@@ -36,7 +76,13 @@ export class UsersComponent {
     this.hideAdd = true;
   }
 
-  deleteUser(userDni: string) {
+  onCancelAdded(ev: boolean): void {
+    if (ev) {
+      this.hideAdd = true
+    }
+  }
+
+  deleteUser(userDni: number) {
     const tempUsers: UserInterface[] = this.dataSource.filter(
       (element) => element.dni != userDni
     );
@@ -52,7 +98,7 @@ export class UsersComponent {
 
   cancelEditUser() {
     this.userEdit = {
-      dni: '',
+      dni: 0,
       firstName: '',
       lastName: '',
       email: '',
@@ -61,10 +107,6 @@ export class UsersComponent {
     };
     this.userEditIndex = 0;
     this.hideEdit = !this.hideEdit;
-  }
-
-  cancelAddUser() {
-    this.hideAdd = true;
   }
 
   botonForm() {

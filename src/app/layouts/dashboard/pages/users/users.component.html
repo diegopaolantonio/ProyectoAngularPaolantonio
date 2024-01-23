@@ -1,6 +1,7 @@
 <app-user-form
   *ngIf="!hideAdd"
   (userAdded)="onUserAdded($event)"
+  (cancelAdded)="onCancelAdded($event)"
 ></app-user-form>
 
 <button
@@ -13,16 +14,6 @@
     >
       Formulario Crear usuario
     </button>
-    <button
-      *ngIf="!hideAdd"
-      class="m-2"
-      mat-flat-button
-      color="accent"
-      type="button"
-      (click)="cancelAddUser()"
-    >
-      Cancelar
-    </button>
 
 <div *ngIf="!hideEdit" class="container m-2 w-100 row">
   <h2>Editar datos de usuario</h2>
@@ -31,7 +22,7 @@
   <div class="col-4">
     <mat-form-field class="w-100">
       <mat-label>DNI</mat-label>
-      <input [(ngModel)]="userEdit.dni" matInput type="text" />
+      <input [(ngModel)]="userEdit.dni" matInput type="number" />
     </mat-form-field>
   </div>
 
@@ -127,7 +118,7 @@
     <ng-container matColumnDef="dni">
       <th mat-header-cell *matHeaderCellDef class="text-center">DNI</th>
       <td mat-cell *matCellDef="let user" class="text-center">
-        {{ user.dni }}
+        {{ user.dni | number: '8.0-0' }}
       </td>
     </ng-container>
     <!-- fullName Column -->

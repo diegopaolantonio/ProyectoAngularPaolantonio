@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -15,9 +15,12 @@ export class UserFormComponent {
   @Output()
   userAdded = new EventEmitter();
 
+  @Output()
+  cancelAdded = new EventEmitter();
+
   constructor(private fb: FormBuilder) {
     this.userForm = this.fb.group({
-      dni: this.fb.control('', [Validators.required]),
+      dni: this.fb.control(0, [Validators.required]),
       firstName: this.fb.control('', [Validators.required]),
       lastName: this.fb.control('', [Validators.required]),
       email: this.fb.control('', [Validators.required, Validators.email]),
@@ -41,5 +44,9 @@ export class UserFormComponent {
         control.updateValueAndValidity();
       });
     }
+  }
+
+  cancelAddUser(): void {
+    this.cancelAdded.emit(true)
   }
 }
