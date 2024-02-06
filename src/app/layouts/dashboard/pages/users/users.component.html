@@ -1,124 +1,20 @@
-<app-user-form
-  *ngIf="!hideAdd"
-  (userAdded)="onUserAdded($event)"
-  (cancelAdded)="onCancelAdded($event)"
-></app-user-form>
-
 <button
-      *ngIf="hideAdd"
-      class="m-2"
-      mat-flat-button
-      color="primary"
-      type="button"
-      (click)="botonForm()"
-    >
-      Crear usuario
-    </button>
+  class="m-2"
+  mat-flat-button
+  color="primary"
+  type="button"
+  (click)="onCreate()"
+>
+  Crear usuario
+</button>
 
-<div *ngIf="!hideEdit" class="container m-2 w-100 row">
-  <h2>Editar datos de usuario</h2>
-
-  <!-- DNI -->
-  <div class="col-4">
-    <mat-form-field class="w-100">
-      <mat-label>DNI</mat-label>
-      <input [(ngModel)]="userEdit.dni" matInput type="number" />
-    </mat-form-field>
-  </div>
-
-  <!-- Nombre -->
-  <div class="col-4">
-    <mat-form-field class="w-100">
-      <mat-label>Nombre</mat-label>
-      <input [(ngModel)]="userEdit.firstName" matInput type="text" />
-    </mat-form-field>
-  </div>
-
-  <!-- Apellido -->
-  <div class="col-4">
-    <mat-form-field class="w-100">
-      <mat-label>Apellido</mat-label>
-      <input [(ngModel)]="userEdit.lastName" matInput type="text" />
-    </mat-form-field>
-  </div>
-
-  <!-- Email -->
-  <div class="col-4">
-    <mat-form-field class="w-100">
-      <mat-label>Email</mat-label>
-      <input
-        [(ngModel)]="userEdit.email"
-        matInput
-        type="email"
-        placeholder="pat@example.com"
-      />
-    </mat-form-field>
-  </div>
-
-  <!-- Contraseña -->
-  <div class="col-4">
-    <mat-form-field class="w-100">
-      <mat-label>Contraseña</mat-label>
-      <input
-        [(ngModel)]="userEdit.password"
-        (input)="(userEdit.password)"
-        matInput
-        [type]="hide ? 'password' : 'text'"
-      />
-      <button
-        mat-icon-button
-        matSuffix
-        type="button"
-        (click)="hide = !hide"
-        [attr.aria-label]="'Hide password'"
-        [attr.aria-pressed]="hide"
-      >
-        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
-      </button>
-    </mat-form-field>
-  </div>
-
-  <!-- Rol -->
-  <div class="col-4">
-    <mat-form-field class="w-100">
-      <mat-label>Rol</mat-label>
-      <mat-select [(ngModel)]="userEdit.role">
-        <mat-option value="Admin">Admin</mat-option>
-        <mat-option value="Alumno">Alumno</mat-option>
-        <mat-option value="Profesor">Profesor</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div>
-    <button
-      class="m-2"
-      mat-flat-button
-      color="primary"
-      type="reset"
-      (click)="updateUser()"
-    >
-      Guardar
-    </button>
-    <button
-      class="m-2"
-      mat-flat-button
-      color="accent"
-      type="reset"
-      (click)="cancelEditUser()"
-    >
-      Cancelar
-    </button>
-  </div>
-</div>
-
-<div *ngIf="hideEdit" class="m-4">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<div class="m-4">
+  <table mat-table [dataSource]="users" class="mat-elevation-z8">
     <!-- dni Column -->
     <ng-container matColumnDef="dni">
       <th mat-header-cell *matHeaderCellDef class="text-center">DNI</th>
       <td mat-cell *matCellDef="let user" class="text-center">
-        {{ user.dni | number: '8.0-0' }}
+        {{ user.dni | number : "8.0-0" }}
       </td>
     </ng-container>
     <!-- fullName Column -->
@@ -151,13 +47,13 @@
     </ng-container>
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef class="text-center">Accion</th>
-      <td mat-cell *matCellDef="let user; let j = index" class="text-center">
+      <td mat-cell *matCellDef="let user" class="text-center">
         <button
           matSuffix
           mat-icon-button
           color="primary"
           focusable="false"
-          (click)="editUserFunc(user, j)"
+          (click)="onEdit(user)"
         >
           <mat-icon>edit</mat-icon>
         </button>
@@ -166,7 +62,7 @@
           mat-icon-button
           color="warn"
           focusable="false"
-          (click)="deleteUser(user.dni)"
+          (click)="onDelete(user.dni)"
         >
           <mat-icon>delete</mat-icon>
         </button>

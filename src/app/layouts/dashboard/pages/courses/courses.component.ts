@@ -7,57 +7,70 @@ import { CourseFormComponent } from './component/course-form/course-form.compone
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.component.html',
-  styleUrl: './courses.component.scss'
+  styleUrl: './courses.component.scss',
 })
 export class CoursesComponent {
-  displayedColumns = ['code', 'name', 'startDate', 'finishDate', 'price', 'action']
+  displayedColumns = [
+    'code',
+    'name',
+    'startDate',
+    'finishDate',
+    'price',
+    'action',
+  ];
 
   courses: CourseInterface[] = [];
 
-  constructor(private coursesService: CoursesService, public dialog: MatDialog) {
+  constructor(
+    private coursesService: CoursesService,
+    public dialog: MatDialog
+  ) {
     this.coursesService.getCourses().subscribe({
       next: (courses) => {
         this.courses = courses;
-      }
-    })
+      },
+    });
   }
 
   onCreate(): void {
-    this.dialog.open(CourseFormComponent).afterClosed().subscribe({
-      next: (course) => {
-        if(course) {
-          this.coursesService.createCourse(course).subscribe({
-            next: (courses) => (this.courses = courses),
-          })
-        }
-      }
-    })
+    this.dialog
+      .open(CourseFormComponent)
+      .afterClosed()
+      .subscribe({
+        next: (course) => {
+          if (course) {
+            this.coursesService.createCourse(course).subscribe({
+              next: (courses) => (this.courses = courses),
+            });
+          }
+        },
+      });
   }
-
 
   onEdit(course: CourseInterface) {
-    this.dialog.open(CourseFormComponent, {
-      data: course,
-    })
-    .afterClosed()
-    .subscribe({
-      next: (result) => {
-        if(result) {
-          this.coursesService.updateCourseById(course.code, result)
-          .subscribe({
-            next: (courses) => (this.courses = courses),
-          });
-        }
-      },
-    });
-    
+    this.dialog
+      .open(CourseFormComponent, {
+        data: course,
+      })
+      .afterClosed()
+      .subscribe({
+        next: (result) => {
+          if (result) {
+            this.coursesService
+              .updateCourseById(course.code, result)
+              .subscribe({
+                next: (courses) => (this.courses = courses),
+              });
+          }
+        },
+      });
   }
 
-  onDelete(code:string) {
+  onDelete(code: string) {
     this.coursesService.deleteCourseById(code).subscribe({
       next: (courses) => {
         this.courses = courses;
-      }
-    })
+      },
+    });
   }
 }

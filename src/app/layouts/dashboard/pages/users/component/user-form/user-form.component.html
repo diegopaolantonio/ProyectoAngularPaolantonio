@@ -1,0 +1,103 @@
+<h1 mat-dialog-title class="text-center">USUARIO</h1>
+
+<div mat-dialog-content class="container text-center">
+  <form [formGroup]="userForm" class="col-12">
+    <!-- DNI -->
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field class="m-2 w-100">
+          <mat-label>DNI</mat-label>
+          <input formControlName="dni" matInput type="number" />
+        </mat-form-field>
+      </div>
+
+      <!-- Nombre -->
+      <div class="col-6">
+        <mat-form-field class="m-2 w-100">
+          <mat-label>Nombre</mat-label>
+          <input formControlName="firstName" matInput type="text" />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Apellido -->
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field class="m-2 w-100">
+          <mat-label>Apellido</mat-label>
+          <input formControlName="lastName" matInput type="text" />
+        </mat-form-field>
+      </div>
+
+      <!-- Email -->
+      <div class="col-6">
+        <mat-form-field class="m-2 w-100">
+          <mat-label>Email</mat-label>
+          <input
+            formControlName="email"
+            matInput
+            type="email"
+            placeholder="pat@example.com"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Contraseña -->
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field class="m-2 w-100">
+          <mat-label>Contraseña</mat-label>
+          <input
+            formControlName="password"
+            matInput
+            [type]="hide ? 'password' : 'text'"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <!-- Rol -->
+      <div class="col-6">
+        <mat-form-field class="m-2 w-100">
+          <mat-label>Rol</mat-label>
+          <mat-select formControlName="role">
+            <mat-option value="Admin">Admin</mat-option>
+            <mat-option value="Alumno">Alumno</mat-option>
+            <mat-option value="Profesor">Profesor</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div>
+      <button
+        type="submit"
+        mat-flat-button
+        color="primary"
+        class="m-2"
+        (click)="onSave()"
+      >
+        Agregar
+      </button>
+      <button
+        type="reset"
+        mat-flat-button
+        color="accent"
+        class="m-2"
+        (click)="onCancel()"
+      >
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>

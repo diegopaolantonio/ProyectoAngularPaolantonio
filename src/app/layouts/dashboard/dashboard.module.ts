@@ -22,13 +22,19 @@ import { RouterModule } from '@angular/router';
     RouterModule.forChild([
       {
         path: 'users',
-        loadChildren: () => import('./pages/users/users.module').then((module) => module.UsersModule),
+        loadChildren: () =>
+          import('./pages/users/users.module').then(
+            (module) => module.UsersModule
+          ),
       },
       {
         path: 'courses',
-        loadChildren: () => import('./pages/courses/courses.module').then((module) => module.CoursesModule),
+        loadChildren: () =>
+          import('./pages/courses/courses.module').then(
+            (module) => module.CoursesModule
+          ),
       },
-    ])
+    ]),
   ],
   exports: [DashboardComponent],
 })

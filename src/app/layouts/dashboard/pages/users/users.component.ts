@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
 import { UserInterface } from './models/index';
+import { UsersService } from './users.service';
+import { MatDialog } from '@angular/material/dialog';
+import { UserFormComponent } from './component/user-form/user-form.component';
 
 @Component({
   selector: 'app-users',
@@ -16,106 +18,54 @@ export class UsersComponent {
     'role',
     'action',
   ];
-  dataSource: UserInterface[] = [{
-    dni: 11111111,
-    firstName: 'Juan',
-    lastName: 'Perez',
-    email: 'juan@mail.com',
-    password: '123456',
-    role: 'Admin',
-  },
-  {
-    dni: 22222222,
-    firstName: 'Pedro',
-    lastName: 'Martinez',
-    email: 'pedro@mail.com',
-    password: '123456',
-    role: 'Alumno',
-  },
-  {
-    dni: 33333333,
-    firstName: 'Alberto',
-    lastName: 'Gomez',
-    email: 'alberto@mail.com',
-    password: '123456',
-    role: 'Profesor',
-  },
-  {
-    dni: 44444444,
-    firstName: 'Fernando',
-    lastName: 'Vilca',
-    email: 'fernando@mail.com',
-    password: '123456',
-    role: 'Alumno',
-  },
-  {
-    dni: 55555555,
-    firstName: 'Franco',
-    lastName: 'Pereira',
-    email: 'franco@mail.com',
-    password: '123456',
-    role: 'Profesor',
-  },
-];
-  tempUser: UserInterface[] = [];
-  hide = true;
-  hideEdit = true;
-  hideAdd = true;
-  userEdit: UserInterface = {
-    dni: 0,
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    role: '',
-  };
-  userEditIndex: number = 0;
 
-  onUserAdded(ev: UserInterface): void {
-    this.dataSource = [...this.dataSource, { ...ev }];
-    this.hideAdd = true;
+  users: UserInterface[] = [];
+
+  constructor(private usersService: UsersService, public dialog: MatDialog) {
+    this.usersService.getUsers().subscribe({
+      next: (users) => {
+        this.users = users;
+      },
+    });
   }
 
-  onCancelAdded(ev: boolean): void {
-    if (ev) {
-      this.hideAdd = true
-    }
+  onCreate(): void {
+    this.dialog
+      .open(UserFormComponent)
+      .afterClosed()
+      .subscribe({
+        next: (user) => {
+          if (user) {
+            this.usersService.createUser(user).subscribe({
+              next: (users) => (this.users = users),
+            });
+          }
+        },
+      });
   }
 
-  deleteUser(userDni: number) {
-    const tempUsers: UserInterface[] = this.dataSource.filter(
-      (element) => element.dni != userDni
-    );
-    this.dataSource = [...tempUsers];
+  onEdit(user: UserInterface) {
+    this.dialog
+      .open(UserFormComponent, {
+        data: user,
+      })
+      .afterClosed()
+      .subscribe({
+        next: (result) => {
+          if (result) {
+            this.usersService.updateUserById(user.dni, result).subscribe({
+              next: (users) => (this.users = users),
+            });
+          }
+        },
+      });
   }
 
-  editUserFunc(user: UserInterface, j: number) {
-    this.userEdit = { ...user };
-    this.userEditIndex = j;
-    this.hideEdit = false;
-    this.hideAdd =  true;
-  }
-
-  cancelEditUser() {
-    this.userEdit = {
-      dni: 0,
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      role: '',
-    };
-    this.userEditIndex = 0;
-    this.hideEdit = !this.hideEdit;
-  }
-
-  botonForm() {
-    this.hideAdd = false;
-    this.hideEdit = true;
-  }
-
-  updateUser() {
-    this.dataSource[this.userEditIndex] = { ...this.userEdit };
-    this.hideEdit = !this.hideEdit;
+  onDelete(dni: number) {
+    this.usersService.deleteUserById(dni).subscribe({
+      next: (users) => {
+        this.users = users;
+      },
+    });
   }
 }
