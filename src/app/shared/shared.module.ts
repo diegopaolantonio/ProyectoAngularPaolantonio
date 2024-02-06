@@ -2,10 +2,36 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FullNamePipe } from './full-name.pipe';
 import { FontSizeDirective } from './font-size.directive';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+import { MatListModule } from '@angular/material/list';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [FullNamePipe, FontSizeDirective],
   imports: [CommonModule],
-  exports: [FullNamePipe, FontSizeDirective],
+  exports: [
+    FullNamePipe,
+    FontSizeDirective,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatDatepickerModule,
+    MatSelectModule,
+    MatListModule,
+    MatNativeDateModule,
+  ],
 })
 export class SharedModule {}

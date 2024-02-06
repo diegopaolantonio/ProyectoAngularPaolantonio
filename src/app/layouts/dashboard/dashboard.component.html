@@ -1,14 +1,37 @@
-<mat-drawer-container class="dashboard-container" autosize>
+<mat-drawer-container
+  class="dashboard-container"
+  style="height: 100vh"
+  autosize
+>
   <mat-drawer #drawer class="example-sidenav" mode="side">
     <p class="text-center m-1">Secciones</p>
     <div class="row m-2">
-      <button class="btn btn-secondary">Registrate</button>
+      <a
+        #usersLink="routerLinkActive"
+        routerLinkActive
+        [activated]="usersLink.isActive"
+        routerLink="users"
+        mat-list-item
+        class="btn btn-secondary"
+        >Usuarios</a
+      >
     </div>
     <div class="row m-2">
-      <button class="btn btn-secondary">Ingresar</button>
+      <a
+        #coursesLink="routerLinkActive"
+        routerLinkActive
+        [activated]="coursesLink.isActive"
+        routerLink="courses"
+        mat-list-item
+        class="btn btn-secondary"
+        >Cursos</a
+      >
     </div>
     <div class="row m-2">
-      <button class="btn btn-secondary">ABM usuarios</button>
+      <a
+        class="btn btn-secondary"
+        >Cerrar sesion</a
+      >
     </div>
   </mat-drawer>
 
@@ -26,7 +49,7 @@
       style="text-align: center; font-weight: bold"
       appFontSize
       size="24px"
-      >ABM de usuarios</span
+      >DASHBOARD</span
     >
     <div></div>
     <div>
@@ -34,5 +57,5 @@
     </div>
   </mat-toolbar>
 
-  <app-users></app-users>
+  <router-outlet></router-outlet>
 </mat-drawer-container>

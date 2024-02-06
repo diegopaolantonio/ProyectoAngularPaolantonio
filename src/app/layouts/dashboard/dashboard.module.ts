@@ -7,6 +7,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { UsersModule } from './pages/users/users.module';
 import { SharedModule } from '../../shared/shared.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -18,6 +19,16 @@ import { SharedModule } from '../../shared/shared.module';
     MatToolbarModule,
     UsersModule,
     SharedModule,
+    RouterModule.forChild([
+      {
+        path: 'users',
+        loadChildren: () => import('./pages/users/users.module').then((module) => module.UsersModule),
+      },
+      {
+        path: 'courses',
+        loadChildren: () => import('./pages/courses/courses.module').then((module) => module.CoursesModule),
+      },
+    ])
   ],
   exports: [DashboardComponent],
 })

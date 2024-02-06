@@ -1,0 +1,66 @@
+<button
+      class="m-2"
+      mat-flat-button
+      color="primary"
+      type="button"
+      (click)="onCreate()"
+    >
+      Crear curso
+    </button>
+
+<div class="m-4">
+  <table mat-table [dataSource]="courses" class="mat-elevation-z8">
+    <!-- code Column -->
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef class="text-center">Codigo</th>
+      <td mat-cell *matCellDef="let course" class="text-center">
+        {{ course.code }}
+      </td>
+    </ng-container>
+    <!-- name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef class="text-center">Nombre</th>
+      <td mat-cell *matCellDef="let course" class="text-center">
+        {{ course.name }}
+      </td>
+    </ng-container>
+    <!-- startDate Column -->
+    <ng-container matColumnDef="startDate">
+      <th mat-header-cell *matHeaderCellDef class="text-center">
+        Fecha de inicio
+      </th>
+      <td mat-cell *matCellDef="let course" class="text-center">
+        {{ course.startDate | date : "EEEE dd/MM/yyyy" }}
+      </td>
+    </ng-container>
+    <!-- finishDate Column -->
+    <ng-container matColumnDef="finishDate">
+      <th mat-header-cell *matHeaderCellDef class="text-center">
+        Fecha de fin
+      </th>
+      <td mat-cell *matCellDef="let course" class="text-center">
+        {{ course.finishDate | date : "EEEE dd/MM/yyyy" }}
+      </td>
+    </ng-container>
+    <!-- price Column -->
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef class="text-center">Precio</th>
+      <td mat-cell *matCellDef="let course" class="text-center">
+        {{ course.price | currency : 'ARS' }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef class="text-center">Accion</th>
+      <td mat-cell *matCellDef="let course; let j = index" class="text-center">
+        <button matSuffix mat-icon-button color="primary" focusable="false" (click)=onEdit(course)>
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button matSuffix mat-icon-button color="warn" focusable="false" (click)=onDelete(course.code)>
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

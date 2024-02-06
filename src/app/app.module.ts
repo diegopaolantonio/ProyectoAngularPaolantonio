@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardModule } from './layouts/dashboard/dashboard.module';
 import { AuthModule } from './layouts/auth/auth.module';
 import { registerLocaleData } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import esAR from '@angular/common/locales/es-AR';
 
@@ -20,6 +21,7 @@ registerLocaleData(esAR);
     BrowserAnimationsModule,
     DashboardModule,
     AuthModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     {
