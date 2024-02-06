@@ -3,6 +3,7 @@ import { CourseInterface } from './models';
 import { CoursesService } from './courses.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CourseFormComponent } from './component/course-form/course-form.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-courses',
@@ -10,6 +11,8 @@ import { CourseFormComponent } from './component/course-form/course-form.compone
   styleUrl: './courses.component.scss',
 })
 export class CoursesComponent {
+  codeExists: boolean = false;
+
   displayedColumns = [
     'code',
     'name',
@@ -38,10 +41,27 @@ export class CoursesComponent {
       .afterClosed()
       .subscribe({
         next: (course) => {
+          this.codeExists = false;
+          this.courses.forEach((element) => {
+            if (element.code === course.code) this.codeExists = true;
+          });
           if (course) {
-            this.coursesService.createCourse(course).subscribe({
-              next: (courses) => (this.courses = courses),
-            });
+            if (!this.codeExists) {
+              this.coursesService.createCourse(course).subscribe({
+                next: (courses) => {
+                  this.courses = courses;
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Curso creado',
+                  });
+                },
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'El codigo cargado ya existe en la BD',
+              });
+            }
           }
         },
       });
@@ -59,7 +79,13 @@ export class CoursesComponent {
             this.coursesService
               .updateCourseById(course.code, result)
               .subscribe({
-                next: (courses) => (this.courses = courses),
+                next: (courses) => {
+                  this.courses = courses;
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Curso modificado',
+                  });
+                },
               });
           }
         },
@@ -67,10 +93,25 @@ export class CoursesComponent {
   }
 
   onDelete(code: string) {
-    this.coursesService.deleteCourseById(code).subscribe({
-      next: (courses) => {
-        this.courses = courses;
-      },
+    Swal.fire({
+      title: 'Esta seguro de eliminar el curso?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.coursesService.deleteCourseById(code).subscribe({
+          next: (courses) => {
+            this.courses = courses;
+            Swal.fire({
+              title: 'Curso eliminado!',
+              icon: 'success',
+            });
+          },
+        });
+      }
     });
   }
 }

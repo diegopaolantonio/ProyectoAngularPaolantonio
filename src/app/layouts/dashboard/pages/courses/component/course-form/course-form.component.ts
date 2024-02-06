@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CourseInterface } from '../../models';
 
@@ -17,11 +17,11 @@ export class CourseFormComponent {
     @Inject(MAT_DIALOG_DATA) private editCourse?: CourseInterface
   ) {
     this.courseForm = this.fb.group({
-      code: this.fb.control(''),
-      name: this.fb.control(''),
-      startDate: this.fb.control(''),
-      finishDate: this.fb.control(''),
-      price: this.fb.control(0),
+      code: this.fb.control('', [Validators.required]),
+      name: this.fb.control('', [Validators.required]),
+      startDate: this.fb.control('', [Validators.required]),
+      finishDate: this.fb.control('', [Validators.required]),
+      price: this.fb.control(null, [Validators.required]),
     });
 
     if (editCourse) {
@@ -30,10 +30,10 @@ export class CourseFormComponent {
   }
 
   onSave(): void {
-    this.dialogRef.close(this.courseForm.value);
-  }
-
-  onCancel(): void {
-    this.dialogRef.close();
+    if (this.courseForm.invalid) {
+      this.courseForm.markAllAsTouched();
+    } else {
+      this.dialogRef.close(this.courseForm.value);
+    }
   }
 }

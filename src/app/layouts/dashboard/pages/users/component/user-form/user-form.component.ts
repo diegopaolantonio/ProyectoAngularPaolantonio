@@ -19,7 +19,7 @@ export class UserFormComponent {
     @Inject(MAT_DIALOG_DATA) private editUser?: UserInterface
   ) {
     this.userForm = this.fb.group({
-      dni: this.fb.control(0, [Validators.required]),
+      dni: this.fb.control(null, [Validators.required]),
       firstName: this.fb.control('', [Validators.required]),
       lastName: this.fb.control('', [Validators.required]),
       email: this.fb.control('', [Validators.required, Validators.email]),
@@ -33,10 +33,10 @@ export class UserFormComponent {
   }
 
   onSave(): void {
-    this.dialogRef.close(this.userForm.value);
-  }
-
-  onCancel(): void {
-    this.dialogRef.close();
+    if (this.userForm.invalid) {
+      this.userForm.markAllAsTouched();
+    } else {
+      this.dialogRef.close(this.userForm.value);
+    }
   }
 }

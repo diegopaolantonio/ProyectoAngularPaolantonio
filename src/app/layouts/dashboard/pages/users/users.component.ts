@@ -3,6 +3,7 @@ import { UserInterface } from './models/index';
 import { UsersService } from './users.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UserFormComponent } from './component/user-form/user-form.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-users',
@@ -10,6 +11,8 @@ import { UserFormComponent } from './component/user-form/user-form.component';
   styleUrl: './users.component.scss',
 })
 export class UsersComponent {
+  dniExists: boolean = false;
+
   displayedColumns: string[] = [
     'dni',
     'fullName',
@@ -35,10 +38,27 @@ export class UsersComponent {
       .afterClosed()
       .subscribe({
         next: (user) => {
+          this.dniExists = false;
+          this.users.forEach((element) => {
+            if (element.dni === user.dni) this.dniExists = true;
+          });
           if (user) {
-            this.usersService.createUser(user).subscribe({
-              next: (users) => (this.users = users),
-            });
+            if (!this.dniExists) {
+              this.usersService.createUser(user).subscribe({
+                next: (users) => {
+                  this.users = users;
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Usuario creado',
+                  });
+                },
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'El DNI cargado ya existe en la BD',
+              });
+            }
           }
         },
       });
@@ -54,7 +74,13 @@ export class UsersComponent {
         next: (result) => {
           if (result) {
             this.usersService.updateUserById(user.dni, result).subscribe({
-              next: (users) => (this.users = users),
+              next: (users) => {
+                this.users = users;
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Usuario modificado',
+                });
+              },
             });
           }
         },
@@ -62,10 +88,25 @@ export class UsersComponent {
   }
 
   onDelete(dni: number) {
-    this.usersService.deleteUserById(dni).subscribe({
-      next: (users) => {
-        this.users = users;
-      },
+    Swal.fire({
+      title: 'Esta seguro de eliminar el usuario?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.usersService.deleteUserById(dni).subscribe({
+          next: (users) => {
+            this.users = users;
+            Swal.fire({
+              title: 'Usuario eliminado!',
+              icon: 'success',
+            });
+          },
+        });
+      }
     });
   }
 }
