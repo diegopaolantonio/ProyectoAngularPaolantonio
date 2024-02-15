@@ -7,7 +7,8 @@
       "email": "juan@mail.com",
       "password": "123456",
       "role": "Admin",
-      "id": "6a05"
+      "id": "6a05",
+      "userToken": "6a05"
     },
     {
       "dni": 22222222,
@@ -16,7 +17,8 @@
       "email": "pedro@mail.com",
       "password": "123456",
       "role": "Alumno",
-      "id": "c7de"
+      "id": "c7de",
+      "userToken": "c7de"
     },
     {
       "dni": 33333333,
@@ -25,7 +27,8 @@
       "email": "alberto@mail.com",
       "password": "123456",
       "role": "Profesor",
-      "id": "8043"
+      "id": "8043",
+      "userToken": "8043"
     },
     {
       "dni": 44444444,
@@ -34,7 +37,8 @@
       "email": "fernando@mail.com",
       "password": "123456",
       "role": "Alumno",
-      "id": "9a7e"
+      "id": "9a7e",
+      "userToken": "9a7e"
     },
     {
       "dni": 55555555,
@@ -43,7 +47,8 @@
       "email": "franco@mail.com",
       "password": "123456",
       "role": "Profesor",
-      "id": "70ed"
+      "id": "70ed",
+      "userToken": "70ed"
     },
     {
       "dni": 66666666,
@@ -52,7 +57,8 @@
       "email": "yamile@mail.com",
       "password": "125412",
       "role": "Admin",
-      "id": "8b17"
+      "id": "8b17",
+      "userToken": "8b17"
     }
   ],
   "courses": [

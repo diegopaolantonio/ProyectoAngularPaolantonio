@@ -2,23 +2,14 @@ import { Injectable } from '@angular/core';
 import { UserInterface } from '../dashboard/pages/users/models';
 import { Router } from '@angular/router';
 import { LoadingService } from '../../core/services/loading.service';
-import { delay, finalize, map, of, tap } from 'rxjs';
-import { UsersService } from '../dashboard/pages/users/users.service';
+import { Observable, delay, finalize, map, of, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 interface LoginData {
   email: null | string;
   password: null | string;
 }
-
-const MOCK_USER = {
-  id: '0',
-  dni: 0,
-  email: 'asd@mail.com',
-  firstName: 'Nombre Falso',
-  lastName: 'Apellido Falso',
-  password: 'asdasd',
-  role: 'Profesor',
-};
 
 @Injectable({
   providedIn: 'root',
@@ -26,38 +17,60 @@ const MOCK_USER = {
 export class AuthService {
   authUser: UserInterface | null = null;
 
-  constructor(private router: Router, private loadingService: LoadingService) {}
+  constructor(
+    private router: Router,
+    private loadingService: LoadingService,
+    private httpClient: HttpClient
+  ) {}
 
-  private setAuthUser(testUser: UserInterface): void {
-    this.authUser = testUser;
-    localStorage.setItem('userToken', 'gj234g2gh4j234hjg223b4m2');
+  private setAuthUser(user: UserInterface): void {
+    this.authUser = user;
+    localStorage.setItem('user_Token', user.userToken);
   }
 
-  login(data: LoginData): void {
-    if (
-      data.email === MOCK_USER.email &&
-      data.password === MOCK_USER.password
-    ) {
-      this.setAuthUser(MOCK_USER);
-      this.router.navigate(['dashboard', 'home']);
-    }
+  login(data: LoginData): Observable<UserInterface[]> {
+    return this.httpClient
+      .get<UserInterface[]>(
+        `${environment.apiURL}/users?email=${data.email}&password=${data.password}`
+      )
+      .pipe(
+        tap((response) => {
+          if (!!response[0]) {
+            this.setAuthUser(response[0]);
+            this.router.navigate(['dashboard', 'home']);
+          } else {
+            alert('Email o password invalidos');
+          }
+        })
+      );
   }
 
   logout(): void {
     this.authUser = null;
     this.router.navigate(['auth', 'login']);
-    localStorage.removeItem('userToken');
+    localStorage.removeItem('user_Token');
   }
 
   verifyToken() {
     this.loadingService.setIsLoading(true);
-    return of(localStorage.getItem('userToken')).pipe(
-      delay(1000),
-      map((response) => !!response),
-      tap(() => {
-        if (localStorage.getItem('userToken')) this.setAuthUser(MOCK_USER);
-      }),
-      finalize(() => this.loadingService.setIsLoading(false))
-    );
+    return this.httpClient
+      .get<UserInterface[]>(
+        `${environment.apiURL}/users?userToken=${localStorage.getItem(
+          'user_Token'
+        )}`
+      )
+      .pipe(
+        map((response) => {
+          if (response.length) {
+            this.setAuthUser(response[0]);
+            return true;
+          } else {
+            this.authUser = null;
+            localStorage.removeItem('user_Token');
+            return false;
+          }
+        }),
+        finalize(() => this.loadingService.setIsLoading(false))
+      );
   }
 }
