@@ -1,1 +1,51 @@
-<p>login works!</p>
+<div mat-dialog-content class="container text-center">
+  <form [formGroup]="loginForm" class="col-4">
+    <h1 mat-dialog-title class="text-center">Iniciar sesion</h1>
+
+    <!-- Email -->
+    <div class="row">
+      <mat-form-field class="m-2 w-100">
+        <mat-label>Email</mat-label>
+        <input
+          formControlName="email"
+          matInput
+          type="email"
+          placeholder="pat@example.com"
+        />
+      </mat-form-field>
+    </div>
+
+    <!-- Contraseña -->
+    <div class="row">
+      <mat-form-field class="m-2 w-100">
+        <mat-label>Contraseña</mat-label>
+        <input
+          formControlName="password"
+          matInput
+          [type]="hide ? 'password' : 'text'"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div>
+      <button
+        type="submit"
+        mat-flat-button
+        color="primary"
+        class="m-2"
+        (click)="onSubmit()"
+      >
+        Ingresar
+      </button>
+    </div>
+  </form>
+</div>

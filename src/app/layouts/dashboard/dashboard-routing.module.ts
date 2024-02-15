@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { adminGuard } from '../../core/guards/admin.guard';
+import { teacherGuard } from '../../core/guards/teacher.guard';
 
 const routes: Routes = [
   {
@@ -9,11 +11,13 @@ const routes: Routes = [
   },
   {
     path: 'users',
+    canActivate: [adminGuard],
     loadChildren: () =>
       import('./pages/users/users.module').then((module) => module.UsersModule),
   },
   {
     path: 'courses',
+    canActivate: [teacherGuard],
     loadChildren: () =>
       import('./pages/courses/courses.module').then(
         (module) => module.CoursesModule

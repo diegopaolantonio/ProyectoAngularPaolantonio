@@ -21,7 +21,7 @@ export class UsersService {
       .get<UserInterface[]>(`${environment.apiURL}/users`)
       .pipe(
         delay(1000),
-        finalize(() => this.loadingService.setIsLoading(false)),  
+        finalize(() => this.loadingService.setIsLoading(false)),
         catchError((error) => {
           alert(`Error al cargar los usuarios, ${error.statusText}`);
           return of([]);
@@ -32,32 +32,39 @@ export class UsersService {
   createUser(user: UserInterface) {
     return this.httpClient
       .post<UserInterface>(`${environment.apiURL}/users`, user)
-      .pipe(mergeMap(() => this.getUsers()),
-      delay(1000),
+      .pipe(
+        mergeMap(() => this.getUsers()),
+        delay(1000),
         catchError((error) => {
           alert(`Error al crear el usuario, ${error.statusText}`);
           return of([]);
-        }));
+        })
+      );
   }
 
   updateUserById(id: string, data: UserInterface) {
-    return this.httpClient.put<UserInterface>(`${environment.apiURL}/users/${id}`, data)
-    .pipe(mergeMap(() => this.getUsers()),
-      delay(1000),
+    return this.httpClient
+      .put<UserInterface>(`${environment.apiURL}/users/${id}`, data)
+      .pipe(
+        mergeMap(() => this.getUsers()),
+        delay(1000),
         catchError((error) => {
           alert(`Error al actualizar el usuario, ${error.statusText}`);
           return of([]);
-        }));
+        })
+      );
   }
 
   deleteUserById(id: string) {
-  return this.httpClient
+    return this.httpClient
       .delete<UserInterface>(`${environment.apiURL}/users/${id}`)
-      .pipe(mergeMap(() => this.getUsers()),
-      delay(1000),
+      .pipe(
+        mergeMap(() => this.getUsers()),
+        delay(1000),
         catchError((error) => {
           alert(`Error al eliminar el usuario, ${error.statusText}`);
           return of([]);
-        }));
+        })
+      );
   }
 }

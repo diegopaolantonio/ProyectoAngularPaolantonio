@@ -3,17 +3,18 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './layouts/auth/auth.component';
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 import { NotFoundComponent } from './layouts/not-found/not-found.component';
+import { autenticacionGuard } from './core/guards/autenticacion.guard';
 
 const routes: Routes = [
   {
     path: 'auth',
     component: AuthComponent,
-    loadChildren: () => import('./layouts/auth/auth.module').then(
-      (module) => module.AuthModule
-    ),
+    loadChildren: () =>
+      import('./layouts/auth/auth.module').then((module) => module.AuthModule),
   },
   {
     path: 'dashboard',
+    canActivate: [autenticacionGuard],
     component: DashboardComponent,
     loadChildren: () =>
       import('./layouts/dashboard/dashboard.module').then(

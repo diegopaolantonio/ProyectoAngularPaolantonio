@@ -13,6 +13,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [FullNamePipe, FontSizeDirective],
@@ -32,6 +33,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSelectModule,
     MatListModule,
     MatNativeDateModule,
+    MatCardModule,
   ],
 })
 export class SharedModule {}
