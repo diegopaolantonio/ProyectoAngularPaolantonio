@@ -1,0 +1,108 @@
+{
+  "users": [
+    {
+      "dni": 11111111,
+      "firstName": "Juan",
+      "lastName": "Perez",
+      "email": "juan@mail.com",
+      "password": "123456",
+      "role": "Admin",
+      "id": "6a05"
+    },
+    {
+      "dni": 22222222,
+      "firstName": "Pedro",
+      "lastName": "Martinez",
+      "email": "pedro@mail.com",
+      "password": "123456",
+      "role": "Alumno",
+      "id": "c7de"
+    },
+    {
+      "dni": 33333333,
+      "firstName": "Alberto",
+      "lastName": "Gomez",
+      "email": "alberto@mail.com",
+      "password": "123456",
+      "role": "Profesor",
+      "id": "8043"
+    },
+    {
+      "dni": 44444444,
+      "firstName": "Fernando",
+      "lastName": "Vilca",
+      "email": "fernando@mail.com",
+      "password": "123456",
+      "role": "Alumno",
+      "id": "9a7e"
+    },
+    {
+      "dni": 55555555,
+      "firstName": "Franco",
+      "lastName": "Pereira",
+      "email": "franco@mail.com",
+      "password": "123456",
+      "role": "Profesor",
+      "id": "70ed"
+    },
+    {
+      "dni": 66666666,
+      "firstName": "Yamile",
+      "lastName": "Natel",
+      "email": "yamile@mail.com",
+      "password": "125412",
+      "role": "Admin",
+      "id": "8b17"
+    }
+  ],
+  "courses": [
+    {
+      "code": "ABCD1234",
+      "name": "Analisis Matematico 1",
+      "startDate": "2024-02-05T03:00:00.000Z",
+      "finishDate": "2024-07-15T03:00:00.000Z",
+      "price": 25350,
+      "id": "a02c"
+    },
+    {
+      "code": "AB12CD34",
+      "name": "Fisica 1",
+      "startDate": "2024-02-13T03:00:00.000Z",
+      "finishDate": "2024-07-23T03:00:00.000Z",
+      "price": 20500,
+      "id": "5e25"
+    },
+    {
+      "code": "CDCD3412_2",
+      "name": "Algebra 1",
+      "startDate": "2024-03-01T03:00:00.000Z",
+      "finishDate": "2024-11-30T03:00:00.000Z",
+      "price": 50700,
+      "id": "1541"
+    },
+    {
+      "code": "12AB34CD",
+      "name": "Fisica 2",
+      "startDate": "2024-08-06T03:00:00.000Z",
+      "finishDate": "2024-12-17T03:00:00.000Z",
+      "price": 32000,
+      "id": "ffe2"
+    },
+    {
+      "code": "34AB12CD",
+      "name": "Analisis Matematico 2",
+      "startDate": "2024-07-29T03:00:00.000Z",
+      "finishDate": "2024-12-09T03:00:00.000Z",
+      "price": 30250,
+      "id": "2f35"
+    },
+    {
+      "id": "27e3",
+      "code": "DEDEDE",
+      "name": "curso nuevo",
+      "startDate": "2024-02-01T03:00:00.000Z",
+      "finishDate": "2024-02-29T03:00:00.000Z",
+      "price": 3333
+    }
+  ]
+}

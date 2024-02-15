@@ -73,7 +73,7 @@ export class UsersComponent {
       .subscribe({
         next: (result) => {
           if (result) {
-            this.usersService.updateUserById(user.dni, result).subscribe({
+            this.usersService.updateUserById(user.id, result).subscribe({
               next: (users) => {
                 this.users = users;
                 Swal.fire({
@@ -87,7 +87,7 @@ export class UsersComponent {
       });
   }
 
-  onDelete(dni: number) {
+  onDelete(id: string) {
     Swal.fire({
       title: 'Esta seguro de eliminar el usuario?',
       icon: 'warning',
@@ -97,7 +97,7 @@ export class UsersComponent {
       confirmButtonText: 'Si',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.usersService.deleteUserById(dni).subscribe({
+        this.usersService.deleteUserById(id).subscribe({
           next: (users) => {
             this.users = users;
             Swal.fire({

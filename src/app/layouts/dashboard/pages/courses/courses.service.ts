@@ -1,74 +1,60 @@
 import { Injectable } from '@angular/core';
 import { CourseInterface } from './models';
-import { delay, finalize, of } from 'rxjs';
+import { catchError, delay, finalize, mergeMap, of } from 'rxjs';
 import { LoadingService } from '../../../../core/services/loading.service';
-
-let courses: CourseInterface[] = [
-  {
-    code: 'ABCD1234',
-    name: 'Analisis Matematico 1',
-    startDate: new Date('2024-02-05 00:00'),
-    finishDate: new Date('2024-07-15 00:00'),
-    price: 25350,
-  },
-  {
-    code: 'AB12CD34',
-    name: 'Fisica 1',
-    startDate: new Date('2024-02-13 00:00'),
-    finishDate: new Date('2024-07-23 00:00'),
-    price: 20500,
-  },
-  {
-    code: 'CDCD3412',
-    name: 'Algebra',
-    startDate: new Date('2024-03-02 00:00'),
-    finishDate: new Date('2024-11-30 00:00'),
-    price: 40700,
-  },
-  {
-    code: '12AB34CD',
-    name: 'Fisica 2',
-    startDate: new Date('2024-08-06 00:00'),
-    finishDate: new Date('2024-12-17 00:00'),
-    price: 32000,
-  },
-  {
-    code: '34AB12CD',
-    name: 'Analisis Matematico 2',
-    startDate: new Date('2024-07-29 00:00'),
-    finishDate: new Date('2024-12-09 00:00'),
-    price: 30250,
-  },
-];
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CoursesService {
-  constructor(private loadingService: LoadingService) {}
+  constructor(private loadingService: LoadingService, private httpClient: HttpClient) {}
 
   getCourses() {
     this.loadingService.setIsLoading(true);
-    return of(courses).pipe(
-      delay(1500),
-      finalize(() => this.loadingService.setIsLoading(false))
+
+    return this.httpClient
+    .get<CourseInterface[]>(`${environment.apiURL}/courses`)
+    .pipe(
+      delay(1000),
+      finalize(() => this.loadingService.setIsLoading(false)),  
+      catchError((error) => {
+        alert(`Error al cargar los cursos, ${error.statusText}`);
+        return of([]);
+      })
     );
   }
 
   createCourse(course: CourseInterface) {
-    courses = [...courses, course];
-    return this.getCourses();
+    return this.httpClient
+      .post<CourseInterface>(`${environment.apiURL}/courses`, course)
+      .pipe(mergeMap(() => this.getCourses()),
+      delay(1000),
+        catchError((error) => {
+          alert(`Error al crear el curso, ${error.statusText}`);
+          return of([]);
+        }));
   }
 
-  updateCourseById(code: string, data: CourseInterface) {
-    courses = courses.map((element) =>
-      element.code === code ? { ...element, ...data } : element
-    );
-    return this.getCourses();
+  updateCourseById(id: string, data: CourseInterface) {
+    return this.httpClient.put<CourseInterface>(`${environment.apiURL}/courses/${id}`, data)
+    .pipe(mergeMap(() => this.getCourses()),
+      delay(1000),
+        catchError((error) => {
+          alert(`Error al actualizar el curso, ${error.statusText}`);
+          return of([]);
+        }));
   }
 
-  deleteCourseById(code: string) {
-    courses = courses.filter((element) => element.code !== code);
-    return this.getCourses();
+  deleteCourseById(id: string) {
+  return this.httpClient
+  .delete<CourseInterface>(`${environment.apiURL}/courses/${id}`)
+  .pipe(mergeMap(() => this.getCourses()),
+  delay(1000),
+    catchError((error) => {
+      alert(`Error al eliminar el curso, ${error.statusText}`);
+      return of([]);
+    }));
   }
 }

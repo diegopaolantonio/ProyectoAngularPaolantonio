@@ -5,9 +5,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { UsersModule } from './pages/users/users.module';
+// import { UsersModule } from './pages/users/users.module';
 import { SharedModule } from '../../shared/shared.module';
-import { RouterModule } from '@angular/router';
+import { DashboardRoutingModule } from './dashboard-routing.module';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -17,24 +17,9 @@ import { RouterModule } from '@angular/router';
     MatIconModule,
     MatSidenavModule,
     MatToolbarModule,
-    UsersModule,
+    // UsersModule,
     SharedModule,
-    RouterModule.forChild([
-      {
-        path: 'users',
-        loadChildren: () =>
-          import('./pages/users/users.module').then(
-            (module) => module.UsersModule
-          ),
-      },
-      {
-        path: 'courses',
-        loadChildren: () =>
-          import('./pages/courses/courses.module').then(
-            (module) => module.CoursesModule
-          ),
-      },
-    ]),
+    DashboardRoutingModule,
   ],
   exports: [DashboardComponent],
 })

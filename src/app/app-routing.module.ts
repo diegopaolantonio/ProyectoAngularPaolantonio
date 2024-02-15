@@ -1,4 +1,4 @@
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './layouts/auth/auth.component';
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
@@ -8,6 +8,9 @@ const routes: Routes = [
   {
     path: 'auth',
     component: AuthComponent,
+    loadChildren: () => import('./layouts/auth/auth.module').then(
+      (module) => module.AuthModule
+    ),
   },
   {
     path: 'dashboard',
@@ -20,6 +23,11 @@ const routes: Routes = [
   {
     path: '404',
     component: NotFoundComponent,
+  },
+  {
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
   },
   {
     path: '**',

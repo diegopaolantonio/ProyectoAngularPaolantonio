@@ -10,6 +10,7 @@ import { registerLocaleData } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import esAR from '@angular/common/locales/es-AR';
+import { HttpClientModule } from '@angular/common/http';
 
 registerLocaleData(esAR);
 
@@ -22,6 +23,7 @@ registerLocaleData(esAR);
     DashboardModule,
     AuthModule,
     MatProgressSpinnerModule,
+    HttpClientModule,
   ],
   providers: [
     {

@@ -77,7 +77,7 @@ export class CoursesComponent {
         next: (result) => {
           if (result) {
             this.coursesService
-              .updateCourseById(course.code, result)
+              .updateCourseById(course.id, result)
               .subscribe({
                 next: (courses) => {
                   this.courses = courses;
@@ -92,7 +92,7 @@ export class CoursesComponent {
       });
   }
 
-  onDelete(code: string) {
+  onDelete(id: string) {
     Swal.fire({
       title: 'Esta seguro de eliminar el curso?',
       icon: 'warning',
@@ -102,7 +102,7 @@ export class CoursesComponent {
       confirmButtonText: 'Si',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.coursesService.deleteCourseById(code).subscribe({
+        this.coursesService.deleteCourseById(id).subscribe({
           next: (courses) => {
             this.courses = courses;
             Swal.fire({
