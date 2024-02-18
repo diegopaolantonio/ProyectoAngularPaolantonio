@@ -20,7 +20,7 @@ export class CoursesService {
     return this.httpClient
       .get<CourseInterface[]>(`${environment.apiURL}/courses`)
       .pipe(
-        delay(1000),
+        // delay(1000),
         finalize(() => this.loadingService.setIsLoading(false)),
         catchError((error) => {
           alert(`Error al cargar los cursos, ${error.statusText}`);
@@ -34,7 +34,7 @@ export class CoursesService {
       .post<CourseInterface>(`${environment.apiURL}/courses`, course)
       .pipe(
         mergeMap(() => this.getCourses()),
-        delay(1000),
+        // delay(1000),
         catchError((error) => {
           alert(`Error al crear el curso, ${error.statusText}`);
           return of([]);
@@ -47,7 +47,7 @@ export class CoursesService {
       .put<CourseInterface>(`${environment.apiURL}/courses/${id}`, data)
       .pipe(
         mergeMap(() => this.getCourses()),
-        delay(1000),
+        // delay(1000),
         catchError((error) => {
           alert(`Error al actualizar el curso, ${error.statusText}`);
           return of([]);
@@ -60,7 +60,7 @@ export class CoursesService {
       .delete<CourseInterface>(`${environment.apiURL}/courses/${id}`)
       .pipe(
         mergeMap(() => this.getCourses()),
-        delay(1000),
+        // delay(1000),
         catchError((error) => {
           alert(`Error al eliminar el curso, ${error.statusText}`);
           return of([]);

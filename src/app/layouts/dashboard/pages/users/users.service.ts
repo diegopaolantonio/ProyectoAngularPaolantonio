@@ -31,7 +31,7 @@ export class UsersService {
     return this.httpClient
       .get<UserInterface[]>(`${environment.apiURL}/users`)
       .pipe(
-        delay(1000),
+        // delay(1000),
         finalize(() => {
           this.loadingService.setIsLoading(false);
         }),
@@ -50,7 +50,7 @@ export class UsersService {
       })
       .pipe(
         mergeMap(() => this.getUsers()),
-        delay(1000),
+        // delay(1000),
         catchError((error) => {
           alert(`Error al crear el usuario, ${error.statusText}`);
           return of([]);
@@ -63,7 +63,7 @@ export class UsersService {
       .put<UserInterface>(`${environment.apiURL}/users/${id}`, data)
       .pipe(
         mergeMap(() => this.getUsers()),
-        delay(1000),
+        // delay(1000),
         catchError((error) => {
           alert(`Error al actualizar el usuario, ${error.statusText}`);
           return of([]);
@@ -76,7 +76,7 @@ export class UsersService {
       .delete<UserInterface>(`${environment.apiURL}/users/${id}`)
       .pipe(
         mergeMap(() => this.getUsers()),
-        delay(1000),
+        // delay(1000),
         catchError((error) => {
           alert(`Error al eliminar el usuario, ${error.statusText}`);
           return of([]);

@@ -5,7 +5,7 @@ import { AuthService } from '../../auth.service';
 import { SharedModule } from '../../../../shared/shared.module';
 import { Validators } from '@angular/forms';
 
-describe('Pruebas unitarias de LoginComponent', () => {
+describe('Pruebas de LoginComponent', () => {
   let loginComponent: LoginComponent;
 
   beforeEach(() => {
