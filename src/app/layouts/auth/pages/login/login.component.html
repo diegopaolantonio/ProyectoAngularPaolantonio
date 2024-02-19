@@ -12,6 +12,9 @@
           type="email"
           placeholder="pat@example.com"
         />
+        <mat-error style="font-size: smaller">{{
+          loginForm.get("email")?.errors | validationErrors
+        }}</mat-error>
       </mat-form-field>
     </div>
 
@@ -24,6 +27,9 @@
           matInput
           [type]="hide ? 'password' : 'text'"
         />
+        <mat-error style="font-size: smaller">{{
+          loginForm.get("password")?.errors | validationErrors
+        }}</mat-error>
         <button
           mat-icon-button
           matSuffix

@@ -14,9 +14,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
+import { ValidationErrorsPipe } from './validation-errors.pipe';
 
 @NgModule({
-  declarations: [FullNamePipe, FontSizeDirective],
+  declarations: [FullNamePipe, FontSizeDirective, ValidationErrorsPipe],
   imports: [CommonModule],
   exports: [
     FullNamePipe,
@@ -34,6 +35,7 @@ import { MatCardModule } from '@angular/material/card';
     MatListModule,
     MatNativeDateModule,
     MatCardModule,
+    ValidationErrorsPipe,
   ],
 })
 export class SharedModule {}

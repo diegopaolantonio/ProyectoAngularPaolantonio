@@ -76,17 +76,15 @@ export class CoursesComponent {
       .subscribe({
         next: (result) => {
           if (result) {
-            this.coursesService
-              .updateCourseById(course.id, result)
-              .subscribe({
-                next: (courses) => {
-                  this.courses = courses;
-                  Swal.fire({
-                    icon: 'success',
-                    title: 'Curso modificado',
-                  });
-                },
-              });
+            this.coursesService.updateCourseById(course.id, result).subscribe({
+              next: (courses) => {
+                this.courses = courses;
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Curso modificado',
+                });
+              },
+            });
           }
         },
       });

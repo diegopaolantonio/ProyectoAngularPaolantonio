@@ -23,7 +23,10 @@ export class UserFormComponent {
       firstName: this.fb.control('', [Validators.required]),
       lastName: this.fb.control('', [Validators.required]),
       email: this.fb.control('', [Validators.required, Validators.email]),
-      password: this.fb.control('', [Validators.required]),
+      password: this.fb.control('', [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
       role: this.fb.control('', [Validators.required]),
     });
 
