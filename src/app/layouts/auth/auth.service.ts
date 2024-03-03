@@ -5,6 +5,9 @@ import { LoadingService } from '../../core/services/loading.service';
 import { Observable, delay, finalize, map, of, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { Store } from '@ngrx/store';
+import { LoginActions } from './pages/login/store/login.actions';
+import { selectLoginUser } from './pages/login/store/login.selectors';
 
 interface LoginData {
   email: null | string;
@@ -15,16 +18,17 @@ interface LoginData {
   providedIn: 'root',
 })
 export class AuthService {
-  authUser: UserInterface | null = null;
 
   constructor(
     private router: Router,
     private loadingService: LoadingService,
-    private httpClient: HttpClient
-  ) {}
+    private httpClient: HttpClient,
+    private store: Store
+  ) {
+  }
 
   private setAuthUser(user: UserInterface): void {
-    this.authUser = user;
+    this.store.dispatch(LoginActions.loadLogin({ user }));
     localStorage.setItem('user_Token', user.userToken);
   }
 
@@ -46,7 +50,7 @@ export class AuthService {
   }
 
   logout(): void {
-    this.authUser = null;
+    this.store.dispatch(LoginActions.logoutLogin());
     this.router.navigate(['auth', 'login']);
     localStorage.removeItem('user_Token');
   }
@@ -65,7 +69,7 @@ export class AuthService {
             this.setAuthUser(response[0]);
             return true;
           } else {
-            this.authUser = null;
+            this.store.dispatch(LoginActions.logoutLogin());
             localStorage.removeItem('user_Token');
             return false;
           }

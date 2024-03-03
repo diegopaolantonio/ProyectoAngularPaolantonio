@@ -59,6 +59,16 @@
       "role": "Admin",
       "id": "8b17",
       "userToken": "8b17"
+    },
+    {
+      "id": "249d",
+      "dni": 123,
+      "firstName": "zxc",
+      "lastName": "zxc",
+      "email": "zxc@mail.com",
+      "password": "123456",
+      "role": "User",
+      "userToken": " ZPbRmxaVkgbc86H"
     }
   ],
   "courses": [
@@ -109,6 +119,33 @@
       "startDate": "2024-02-01T03:00:00.000Z",
       "finishDate": "2024-02-29T03:00:00.000Z",
       "price": 3333
+    }
+  ],
+  "inscriptions": [
+    {
+      "id": "1c30",
+      "userId": "8b17",
+      "courseId": "ffe2"
+    },
+    {
+      "userId": "249d",
+      "courseId": "5e25",
+      "id": "d4d4"
+    },
+    {
+      "userId": "c7de",
+      "courseId": "27e3",
+      "id": "20d6"
+    },
+    {
+      "id": "0a4d",
+      "userId": "c7de",
+      "courseId": "ffe2"
+    },
+    {
+      "id": "b30d",
+      "userId": "9a7e",
+      "courseId": "1541"
     }
   ]
 }

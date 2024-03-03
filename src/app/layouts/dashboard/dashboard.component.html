@@ -39,6 +39,17 @@
       >
     </div>
     <div class="row m-2">
+      <a
+        #inscriptionsLink="routerLinkActive"
+        routerLinkActive
+        [activated]="inscriptionsLink.isActive"
+        routerLink="inscriptions"
+        mat-list-item
+        class="btn btn-secondary"
+        >Inscripciones</a
+      >
+    </div>
+    <div class="row m-2">
       <!-- <a class="btn btn-secondary">Cerrar sesion</a> -->
       <button class="btn btn-secondary" (click)="onLogout()">
         Cerrar sesion
@@ -64,6 +75,9 @@
     >
     <div></div>
     <div>
+      <div>
+        <span *ngIf="loginUser$ | async; let user">{{ user.email }}</span>
+      </div>
       <span>{{ fecha | date : "EEEE dd/MM/yyyy HH:mm" }}</span>
     </div>
   </mat-toolbar>

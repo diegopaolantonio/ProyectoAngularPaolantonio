@@ -17,10 +17,19 @@ const routes: Routes = [
   },
   {
     path: 'courses',
-    canActivate: [teacherGuard],
+    // canActivate: [teacherGuard],
     loadChildren: () =>
       import('./pages/courses/courses.module').then(
         (module) => module.CoursesModule
+      ),
+  },
+  {
+    path: 'inscriptions',
+    canActivate: [adminGuard],
+    // canActivate: [teacherGuard],
+    loadChildren: () =>
+      import('./pages/inscriptions/inscriptions.module').then(
+        (module) => module.InscriptionsModule
       ),
   },
   {

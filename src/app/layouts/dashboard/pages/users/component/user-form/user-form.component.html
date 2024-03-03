@@ -87,6 +87,7 @@
           <mat-label>Rol</mat-label>
           <mat-select formControlName="role">
             <mat-option value="Admin">Admin</mat-option>
+            <mat-option value="User">User</mat-option>
             <mat-option value="Alumno">Alumno</mat-option>
             <mat-option value="Profesor">Profesor</mat-option>
           </mat-select>
@@ -99,23 +100,23 @@
 
     <div>
       <button
-        type="submit"
-        mat-flat-button
-        color="primary"
-        class="m-2"
-        (click)="onSave()"
+      type="reset"
+      mat-flat-button
+      color="accent"
+      class="m-2"
+      mat-dialog-close
       >
-        Agregar
-      </button>
-      <button
-        type="reset"
-        mat-flat-button
-        color="accent"
-        class="m-2"
-        mat-dialog-close
-      >
-        Cancelar
-      </button>
+      Cancelar
+    </button>
+    <button
+      type="submit"
+      mat-flat-button
+      color="primary"
+      class="m-2"
+      (click)="onSave()"
+    >
+      Agregar
+    </button>
     </div>
   </form>
 </div>

@@ -1,0 +1,53 @@
+<h1 mat-dialog-title>Generar una nueva inscripcion</h1>
+
+<div mat-dialog-content class="container text-center">
+  <form [formGroup]="inscriptionForm">
+    <div class="row">
+      <mat-form-field>
+        <mat-label>Alumno</mat-label>
+        <mat-select formControlName="userId">
+          <mat-option [value]="user.id" *ngFor="let user of users$ | async">
+            {{ user | fullName }}
+          </mat-option>
+        </mat-select>
+        <mat-error style="font-size: smaller">
+          {{ inscriptionForm.get("userId")?.errors | validationErrors }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field>
+        <mat-label>Curso</mat-label>
+        <mat-select formControlName="courseId">
+          <mat-option [value]="course.id" *ngFor="let course of courses$ | async">
+            {{ course.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error style="font-size: smaller">
+          {{ inscriptionForm.get("courseId")?.errors | validationErrors }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <button
+        type="reset"
+        mat-flat-button
+        color="accent"
+        class="m-2"
+        mat-dialog-close
+      >
+        Cancelar
+      </button>
+      <button
+        type="submit"
+        mat-flat-button
+        color="primary"
+        class="m-2"
+        (click)="onSubmit()"
+      >
+        Guardar
+      </button>
+    </div>
+  </form>
+</div>

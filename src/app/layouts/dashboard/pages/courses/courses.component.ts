@@ -26,7 +26,7 @@ export class CoursesComponent {
 
   constructor(
     private coursesService: CoursesService,
-    public dialog: MatDialog
+    public matDialog: MatDialog
   ) {
     this.coursesService.getCourses().subscribe({
       next: (courses) => {
@@ -36,7 +36,7 @@ export class CoursesComponent {
   }
 
   onCreate(): void {
-    this.dialog
+    this.matDialog
       .open(CourseFormComponent)
       .afterClosed()
       .subscribe({
@@ -68,7 +68,7 @@ export class CoursesComponent {
   }
 
   onEdit(course: CourseInterface) {
-    this.dialog
+    this.matDialog
       .open(CourseFormComponent, {
         data: course,
       })
