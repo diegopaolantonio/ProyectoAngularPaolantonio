@@ -10,8 +10,7 @@ import {
 import { InscriptionFormComponent } from './components/inscription-form/inscription-form.component';
 import { InscriptionsActions } from './store/inscriptions.actions';
 import { InscriptionsService } from './inscriptions.service';
-
-const updateString = 'update';
+import { InscriptionDetailComponent } from './components/inscription-detail/inscription-detail.component';
 
 @Component({
   selector: 'app-inscriptions',
@@ -27,10 +26,9 @@ export class InscriptionsComponent implements OnDestroy {
 
   displayedColumns: string[] = [
     'id',
-    'dni',
-    'fullName',
-    'code',
-    'name',
+    'studentName',
+    'courseCode',
+    'courseName',
     'action',
   ];
 
@@ -58,16 +56,22 @@ export class InscriptionsComponent implements OnDestroy {
 
   deleteInscriptionById(inscriptionId: string) {
     this.store.dispatch(
-      InscriptionsActions.deleteInscriptions({ inscriptionId })
+      InscriptionsActions.deleteInscription({ inscriptionId })
     );
   }
 
   updateInscriptionById(inscription: InscriptionInterface): void {
     this.matDialog.open(InscriptionFormComponent, {
-      data: { inscription, updateString },
+      data: { inscription, updateString: 'update' },
     });
   }
 
+  viewInscription(inscription: InscriptionInterface): void {
+    console.log(inscription);
+    this.matDialog.open(InscriptionDetailComponent, {
+      data: inscription.id,
+    });
+  }
   ngOnDestroy(): void {
     this.destroyed$.next(true);
     this.destroyed$.complete();

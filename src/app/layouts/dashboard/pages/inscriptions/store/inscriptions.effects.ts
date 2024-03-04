@@ -4,11 +4,12 @@ import { catchError, map, concatMap } from 'rxjs/operators';
 import { Observable, EMPTY, of } from 'rxjs';
 import { InscriptionsActions } from './inscriptions.actions';
 import { InscriptionsService } from '../inscriptions.service';
-import { UsersService } from '../../users/users.service';
 import { CoursesService } from '../../courses/courses.service';
+import { StudentsService } from '../../students/students.service';
 
 @Injectable()
 export class InscriptionsEffects {
+  
   loadInscriptions$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(InscriptionsActions.loadInscriptions),
@@ -50,25 +51,25 @@ export class InscriptionsEffects {
 
   deleteInscription$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(InscriptionsActions.deleteInscriptions),
+      ofType(InscriptionsActions.deleteInscription),
       concatMap((action) =>
         this.inscriptionsService
           .deleteInscriptionById(action.inscriptionId)
           .pipe(
             map((inscription) =>
-              InscriptionsActions.deleteInscriptionsSuccess({ inscription })
+              InscriptionsActions.deleteInscriptionSuccess({ inscription })
             ),
             catchError((error) =>
-              of(InscriptionsActions.deleteInscriptionsFailure({ error }))
+              of(InscriptionsActions.deleteInscriptionFailure({ error }))
             )
           )
       )
     );
   });
 
-  deleteInscriptionsSuccess$ = createEffect(() => {
+  deleteInscriptionSuccess$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(InscriptionsActions.deleteInscriptionsSuccess),
+      ofType(InscriptionsActions.deleteInscriptionSuccess),
       map(() => InscriptionsActions.loadInscriptions())
     );
   });
@@ -78,7 +79,7 @@ export class InscriptionsEffects {
       ofType(InscriptionsActions.updateInscription),
       concatMap((action) =>
         this.inscriptionsService
-          .updateInscriptionById(action.inscriptionId, action.inscription)
+          .putInscriptionById(action.inscriptionId, action.inscription)
           .pipe(
             map((inscription) =>
               InscriptionsActions.updateInscriptionSuccess({ inscription })
@@ -98,14 +99,14 @@ export class InscriptionsEffects {
     );
   });
 
-  loadUsers$ = createEffect(() => {
+  loadStudents$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(InscriptionsActions.loadUsers),
+      ofType(InscriptionsActions.loadStudents),
       concatMap(() =>
-        this.usersService.getUsers().pipe(
-          map((users) => InscriptionsActions.loadUsersSuccess({ users })),
+          this.studentsService.getStudents().pipe(
+          map((students) => InscriptionsActions.loadStudentsSuccess({ students })),
           catchError((error) =>
-            of(InscriptionsActions.loadUsersFailure({ error }))
+            of(InscriptionsActions.loadStudentsFailure({ error }))
           )
         )
       )
@@ -129,7 +130,7 @@ export class InscriptionsEffects {
   constructor(
     private actions$: Actions,
     private inscriptionsService: InscriptionsService,
-    private usersService: UsersService,
-    private coursesService: CoursesService
+    private studentsService: StudentsService,
+    private coursesService: CoursesService,
   ) {}
 }

@@ -29,6 +29,17 @@
     </div>
     <div class="row m-2">
       <a
+        #studentsLink="routerLinkActive"
+        routerLinkActive
+        [activated]="studentsLink.isActive"
+        routerLink="students"
+        mat-list-item
+        class="btn btn-secondary"
+        >Estudiantes</a
+      >
+    </div>
+    <div class="row m-2">
+      <a
         #coursesLink="routerLinkActive"
         routerLinkActive
         [activated]="coursesLink.isActive"

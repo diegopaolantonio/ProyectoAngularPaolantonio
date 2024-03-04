@@ -14,16 +14,22 @@ describe('Pruebas de CoursesService', () => {
   const FAKE_COURSES_1: CourseInterface[] = [
     {
       id: '1',
-      code: 'fakeCode1',
+      code: 'FakeCode1',
       name: 'FakeName1',
+      hours: 1,
+      classes: 10,
+      teacher: 'FakeTeacher1',
       startDate: new Date('2024-01-01T03:00:00.000Z'),
       finishDate: new Date('2024-01-02T03:00:00.000Z'),
       price: 1000,
     },
     {
       id: '2',
-      code: 'fakeCode2',
+      code: 'FakeCode2',
       name: 'FakeName2',
+      hours: 2,
+      classes: 20,
+      teacher: 'FakeTeacher2',
       startDate: new Date('2024-02-01T03:00:00.000Z'),
       finishDate: new Date('2024-02-02T03:00:00.000Z'),
       price: 2000,
@@ -33,8 +39,11 @@ describe('Pruebas de CoursesService', () => {
   const FAKE_COURSES_2: CourseInterface[] = [
     {
       id: '2',
-      code: 'fakeCode2',
+      code: 'FakeCode2',
       name: 'FakeName2',
+      hours: 2,
+      classes: 20,
+      teacher: 'FakeTeacher2',
       startDate: new Date('2024-02-01T03:00:00.000Z'),
       finishDate: new Date('2024-02-02T03:00:00.000Z'),
       price: 2000,

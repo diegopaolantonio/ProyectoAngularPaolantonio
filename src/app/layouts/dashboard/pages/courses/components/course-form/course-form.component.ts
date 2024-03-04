@@ -19,8 +19,11 @@ export class CourseFormComponent {
     this.courseForm = this.fb.group({
       code: this.fb.control('', [Validators.required]),
       name: this.fb.control('', [Validators.required]),
+      hours: this.fb.control('', [Validators.required]),
+      classes: this.fb.control('', [Validators.required]),
+      teacher: this.fb.control(''),
       startDate: this.fb.control('', [Validators.required]),
-      finishDate: this.fb.control('', [Validators.required]),
+      finishDate: this.fb.control(''),
       price: this.fb.control(null, [Validators.required]),
     });
 

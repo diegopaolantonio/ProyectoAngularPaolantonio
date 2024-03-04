@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserInterface } from './models/index';
 import { LoadingService } from '../../../../core/services/loading.service';
 import { catchError, delay, finalize, mergeMap, of } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 
 @Injectable({

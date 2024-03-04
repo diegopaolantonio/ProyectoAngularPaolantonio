@@ -71,6 +71,26 @@
       "userToken": " ZPbRmxaVkgbc86H"
     }
   ],
+  "students": [
+    {
+      "id": "1da8",
+      "name": "Joaquin",
+      "profile": "Desarrollador",
+      "gender": "Masculino"
+    },
+    {
+      "id": "fd8a",
+      "name": "Diego",
+      "profile": "IT",
+      "gender": "Masculino"
+    },
+    {
+      "id": "5137",
+      "name": "Yamile",
+      "profile": "Usuario Final",
+      "gender": "Femenino"
+    }
+  ],
   "courses": [
     {
       "code": "ABCD1234",
@@ -124,27 +144,32 @@
   "inscriptions": [
     {
       "id": "1c30",
-      "userId": "8b17",
+      "studentId": "1da8",
       "courseId": "ffe2"
     },
     {
-      "userId": "249d",
+      "studentId": "1da8",
       "courseId": "5e25",
       "id": "d4d4"
     },
     {
-      "userId": "c7de",
+      "studentId": "1da8",
       "courseId": "27e3",
       "id": "20d6"
     },
     {
       "id": "0a4d",
-      "userId": "c7de",
+      "studentId": "1da8",
       "courseId": "ffe2"
     },
     {
-      "id": "b30d",
-      "userId": "9a7e",
+      "studentId": "1da8",
+      "courseId": "a02c",
+      "id": "bd1f"
+    },
+    {
+      "id": "f76c",
+      "studentId": "fd8a",
       "courseId": "1541"
     }
   ]

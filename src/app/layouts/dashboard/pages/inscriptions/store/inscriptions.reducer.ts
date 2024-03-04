@@ -1,27 +1,27 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { InscriptionsActions } from './inscriptions.actions';
 import { InscriptionInterface } from '../models';
-import { UserInterface } from '../../users/models';
 import { CourseInterface } from '../../courses/models';
+import { StudentInterface } from '../../students/models';
 
 export const inscriptionsFeatureKey = 'inscriptions';
 
 export interface State {
   inscriptions: InscriptionInterface[];
-  users: UserInterface[];
+  students: StudentInterface[];
   courses: CourseInterface[];
   loadingInscriptions: boolean;
-  loadingUsers: boolean;
+  loadingStudents: boolean;
   loadingCourses: boolean;
   error: unknown;
 }
 
 export const initialState: State = {
   inscriptions: [],
-  users: [],
+  students: [],
   courses: [],
   loadingInscriptions: false,
-  loadingUsers: false,
+  loadingStudents: false,
   loadingCourses: false,
   error: null,
 };
@@ -44,18 +44,18 @@ export const reducer = createReducer(
     error: action.error,
   })),
 
-  on(InscriptionsActions.loadUsers, (state) => ({
+  on(InscriptionsActions.loadStudents, (state) => ({
     ...state,
-    loadingUsers: true,
+    loadingStudents: true,
   })),
-  on(InscriptionsActions.loadUsersSuccess, (state, action) => ({
+  on(InscriptionsActions.loadStudentsSuccess, (state, action) => ({
     ...state,
-    loadingUsers: false,
-    users: action.users,
+    loadingStudents: false,
+    students: action.students,
   })),
-  on(InscriptionsActions.loadUsersFailure, (state, action) => ({
+  on(InscriptionsActions.loadStudentsFailure, (state, action) => ({
     ...state,
-    loadingUsers: false,
+    loadingStudents: false,
     error: action.error,
   })),
 

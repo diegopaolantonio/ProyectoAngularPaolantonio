@@ -1,8 +1,7 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { CreateInscriptionInterface, InscriptionInterface } from '../models';
-import { UserInterface } from '../../users/models';
 import { CourseInterface } from '../../courses/models';
-import { Observable } from 'rxjs';
+import { StudentInterface } from '../../students/models';
 
 export const InscriptionsActions = createActionGroup({
   source: 'Inscriptions',
@@ -19,11 +18,11 @@ export const InscriptionsActions = createActionGroup({
     }>(),
     'Create Inscription Failure': props<{ error: unknown }>(),
 
-    'Delete Inscriptions': props<{ inscriptionId: string }>(),
-    'Delete Inscriptions Success': props<{
+    'Delete Inscription': props<{ inscriptionId: string }>(),
+    'Delete Inscription Success': props<{
       inscription: InscriptionInterface;
     }>(),
-    'Delete Inscriptions Failure': props<{ error: unknown }>(),
+    'Delete Inscription Failure': props<{ error: unknown }>(),
 
     'Update Inscription': props<{
       inscriptionId: string;
@@ -34,9 +33,9 @@ export const InscriptionsActions = createActionGroup({
     }>(),
     'Update Inscription Failure': props<{ error: unknown }>(),
 
-    'Load Users': emptyProps(),
-    'Load Users Success': props<{ users: UserInterface[] }>(),
-    'Load Users Failure': props<{ error: unknown }>(),
+    'Load Students': emptyProps(),
+    'Load Students Success': props<{ students: StudentInterface[] }>(),
+    'Load Students Failure': props<{ error: unknown }>(),
 
     'Load Courses': emptyProps(),
     'Load Courses Success': props<{ courses: CourseInterface[] }>(),

@@ -16,6 +16,13 @@ const routes: Routes = [
       import('./pages/users/users.module').then((module) => module.UsersModule),
   },
   {
+    path: 'students',
+    loadChildren: () =>
+      import('./pages/students/students.module').then(
+        (module) => module.StudentsModule
+      ),
+  },
+  {
     path: 'courses',
     // canActivate: [teacherGuard],
     loadChildren: () =>

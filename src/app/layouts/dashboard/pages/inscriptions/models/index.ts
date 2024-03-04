@@ -1,16 +1,16 @@
 import { CourseInterface } from '../../courses/models';
-import { UserInterface } from '../../users/models';
+import { StudentInterface } from '../../students/models';
 
 export interface InscriptionInterface {
   id: string;
-  userId: string;
+  studentId: string;
   courseId: string;
-  user?: UserInterface;
+  student?: StudentInterface;
   course?: CourseInterface;
 }
 
 export interface CreateInscriptionInterface {
-  userId: string | null;
+  studentId: string | null;
   courseId: string | null;
 }
 

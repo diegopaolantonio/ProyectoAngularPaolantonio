@@ -5,9 +5,9 @@ import {
   CreateInscriptionInterface,
 } from './models/index';
 import { environment } from '../../../../../environments/environment';
-import { UserInterface } from '../users/models';
 import { catchError, concatMap, throwError } from 'rxjs';
 import { CourseInterface } from '../courses/models';
+import { StudentInterface } from '../students/models';
 
 @Injectable({
   providedIn: 'root',
@@ -17,17 +17,17 @@ export class InscriptionsService {
 
   getInscriptions() {
     return this.httpClient.get<InscriptionInterface[]>(
-      `${environment.apiURL}/inscriptions?_embed=user&_embed=course`
+      `${environment.apiURL}/inscriptions?_embed=student&_embed=course`
     );
   }
 
-  getInscriptionsByUserId(userId: string) {
+  getInscriptionsByStudentId(studentId: string) {
     return this.httpClient
-      .get<UserInterface>(`${environment.apiURL}/users/${userId}`)
+      .get<StudentInterface>(`${environment.apiURL}/students/${studentId}`)
       .pipe(
-        concatMap((user) =>
+        concatMap((student) =>
           this.httpClient.get(
-            `${environment.apiURL}/inscriptions?userId=${user.id}`
+            `${environment.apiURL}/inscriptions?studentId=${student.id}`
           )
         ),
         catchError((error) => {
@@ -66,10 +66,7 @@ export class InscriptionsService {
     );
   }
 
-  updateInscriptionById(
-    inscriptionId: string,
-    inscription: InscriptionInterface
-  ) {
+  putInscriptionById(inscriptionId: string, inscription: InscriptionInterface) {
     return this.httpClient.put<InscriptionInterface>(
       `${environment.apiURL}/inscriptions/${inscriptionId}`,
       inscription

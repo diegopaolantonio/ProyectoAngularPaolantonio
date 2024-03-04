@@ -1,17 +1,13 @@
 import { Component, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserInterface } from '../../../users/models';
 import { CourseInterface } from '../../../courses/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import {
-  selectInscriptionsCourses,
-  selectInscriptionsUsers,
-} from '../../store/inscriptions.selectors';
+import { selectInscriptionsCourses, selectInscriptionsStudents} from '../../store/inscriptions.selectors';
 import { InscriptionsActions } from '../../store/inscriptions.actions';
-import { InscriptionInterface, UpdateInscriptionInterface } from '../../models';
-import { selectLoginUser } from '../../../../../auth/pages/login/store/login.selectors';
+import { UpdateInscriptionInterface } from '../../models';
+import { StudentInterface } from '../../../students/models';
 
 @Component({
   selector: 'app-inscription-form',
@@ -19,7 +15,8 @@ import { selectLoginUser } from '../../../../../auth/pages/login/store/login.sel
   styleUrl: './inscription-form.component.scss',
 })
 export class InscriptionFormComponent {
-  users$: Observable<UserInterface[]>;
+
+  students$: Observable<StudentInterface[]>;
   courses$: Observable<CourseInterface[]>;
 
   inscriptionForm: FormGroup;
@@ -32,14 +29,14 @@ export class InscriptionFormComponent {
     private editInscription?: UpdateInscriptionInterface
   ) {
     this.inscriptionForm = this.formBuilder.group({
-      userId: this.formBuilder.control('', Validators.required),
+      studentId: this.formBuilder.control('', Validators.required),
       courseId: this.formBuilder.control('', Validators.required),
     });
 
-    this.store.dispatch(InscriptionsActions.loadUsers());
+    this.store.dispatch(InscriptionsActions.loadStudents());
     this.store.dispatch(InscriptionsActions.loadCourses());
 
-    this.users$ = this.store.select(selectInscriptionsUsers);
+    this.students$ = this.store.select(selectInscriptionsStudents);
     this.courses$ = this.store.select(selectInscriptionsCourses);
 
     if (editInscription?.inscription) {
@@ -68,5 +65,4 @@ export class InscriptionFormComponent {
       this.matDialogRef.close();
     }
   }
-
 }

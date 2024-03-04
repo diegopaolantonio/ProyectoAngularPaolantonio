@@ -2,8 +2,8 @@
 
 <div mat-dialog-content class="container text-center">
   <form [formGroup]="courseForm" class="col-12">
-    <!-- Codigo -->
     <div class="row">
+      <!-- Codigo -->
       <div class="col-6">
         <mat-form-field class="m-2 w-100">
           <mat-label>Codigo</mat-label>
@@ -21,6 +21,54 @@
           <input formControlName="name" matInput type="text" />
           <mat-error style="font-size: smaller">{{
             courseForm.get("name")?.errors | validationErrors
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Cantidad de horas -->
+      <div class="col-6">
+        <mat-form-field class="m-2 w-100">
+          <mat-label>Cant. horas</mat-label>
+          <input formControlName="hours" matInput type="number" />
+          <mat-error style="font-size: smaller">{{
+            courseForm.get("hours")?.errors | validationErrors
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Cantidad de clases -->
+      <div class="col-6">
+        <mat-form-field class="m-2 w-100">
+          <mat-label>Cant. clases</mat-label>
+          <input formControlName="classes" matInput type="number" />
+          <mat-error style="font-size: smaller">{{
+            courseForm.get("classes")?.errors | validationErrors
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Profesor -->
+      <div class="col-6">
+        <mat-form-field class="m-2 w-100">
+          <mat-label>Profesor</mat-label>
+          <input formControlName="teacher" matInput type="text" />
+          <mat-error style="font-size: smaller">{{
+            courseForm.get("teacher")?.errors | validationErrors
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Precio -->
+      <div class="col-6">
+        <mat-form-field class="m-2 w-100">
+          <mat-label>Precio</mat-label>
+          <input formControlName="price" matInput type="number" />
+          <mat-error style="font-size: smaller">{{
+            courseForm.get("price")?.errors | validationErrors
           }}</mat-error>
         </mat-form-field>
       </div>
@@ -68,21 +116,6 @@
           <mat-datepicker #finishDatePicker></mat-datepicker>
         </mat-form-field>
       </div>
-    </div>
-
-    <!-- Precio -->
-    <div class="row">
-      <div class="col-3"></div>
-      <div class="col-6">
-        <mat-form-field class="m-2 w-100">
-          <mat-label>Precio</mat-label>
-          <input formControlName="price" matInput type="number" />
-          <mat-error style="font-size: smaller">{{
-            courseForm.get("price")?.errors | validationErrors
-          }}</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-3"></div>
     </div>
 
     <div>

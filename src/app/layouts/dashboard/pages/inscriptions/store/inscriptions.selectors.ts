@@ -16,14 +16,14 @@ export const selectLoadingInscriptions = createSelector(
   (state) => state.loadingInscriptions
 );
 
-export const selectInscriptionsUsers = createSelector(
+export const selectInscriptionsStudents = createSelector(
   selectInscriptionsState,
-  (state) => state.users
+  (state) => state.students
 );
 
-export const selectLoadingInscriptionsUsers = createSelector(
+export const selectLoadingInscriptionsStudents = createSelector(
   selectInscriptionsState,
-  (state) => state.loadingUsers
+  (state) => state.loadingStudents
 );
 
 export const selectInscriptionsCourses = createSelector(

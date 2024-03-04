@@ -4,14 +4,17 @@
   <form [formGroup]="inscriptionForm">
     <div class="row">
       <mat-form-field>
-        <mat-label>Alumno</mat-label>
-        <mat-select formControlName="userId">
-          <mat-option [value]="user.id" *ngFor="let user of users$ | async">
-            {{ user | fullName }}
+        <mat-label>Estudiante</mat-label>
+        <mat-select formControlName="studentId">
+          <mat-option
+            [value]="student.id"
+            *ngFor="let student of students$ | async"
+          >
+            {{ student.name }}
           </mat-option>
         </mat-select>
         <mat-error style="font-size: smaller">
-          {{ inscriptionForm.get("userId")?.errors | validationErrors }}
+          {{ inscriptionForm.get("studentId")?.errors | validationErrors }}
         </mat-error>
       </mat-form-field>
     </div>
@@ -19,7 +22,10 @@
       <mat-form-field>
         <mat-label>Curso</mat-label>
         <mat-select formControlName="courseId">
-          <mat-option [value]="course.id" *ngFor="let course of courses$ | async">
+          <mat-option
+            [value]="course.id"
+            *ngFor="let course of courses$ | async"
+          >
             {{ course.name }}
           </mat-option>
         </mat-select>

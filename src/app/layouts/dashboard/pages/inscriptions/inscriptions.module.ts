@@ -9,10 +9,14 @@ import { InscriptionFormComponent } from './components/inscription-form/inscript
 import { StoreModule } from '@ngrx/store';
 import { inscriptionsFeature } from './store/inscriptions.reducer';
 import { SharedModule } from '../../../../shared/shared.module';
-import { DetailComponent } from './pages/detail/detail.component';
+import { InscriptionDetailComponent } from './components/inscription-detail/inscription-detail.component';
 
 @NgModule({
-  declarations: [InscriptionsComponent, InscriptionFormComponent, DetailComponent],
+  declarations: [
+    InscriptionsComponent,
+    InscriptionFormComponent,
+    InscriptionDetailComponent,
+  ],
   imports: [
     CommonModule,
     InscriptionsRoutingModule,

@@ -1,0 +1,65 @@
+<mat-card class="example-card">
+  <mat-card-content>
+    <mat-card-title
+      class="text-center"
+      style="font-weight: bold; text-decoration: underline"
+      >Datos del estudiante
+    </mat-card-title>
+    <hr />
+    <div>
+      <ul style="list-style: none">
+        <li>
+          <p class="dataCardUser">ID:</p>
+          <p style="display: inline">{{ student.id }}</p>
+        </li>
+        <hr />
+        <li>
+          <p class="dataCardUser">Nombre:</p>
+          <p style="display: inline">{{ student.name }}</p>
+        </li>
+        <li>
+          <p class="dataCardUser">Perfil:</p>
+          <p style="display: inline">
+            {{ student.profile }}
+          </p>
+        </li>
+        <li>
+          <p class="dataCardUser">Genero:</p>
+          <p style="display: inline">{{ student.gender }}</p>
+        </li>
+      </ul>
+    </div>
+    <hr />
+    <div>
+      <button
+        type="reset"
+        mat-flat-button
+        color="accent"
+        class="m-2"
+        mat-dialog-close
+      >
+        Cerrar
+      </button>
+      <button
+        type="submit"
+        mat-flat-button
+        color="accent"
+        class="m-2"
+        (click)="onDelete(student.id)"
+        mat-dialog-close
+      >
+        Eliminar
+      </button>
+      <button
+        type="submit"
+        mat-flat-button
+        color="primary"
+        class="m-2"
+        (click)="onUpdate(student)"
+        mat-dialog-close
+      >
+        Modificar
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

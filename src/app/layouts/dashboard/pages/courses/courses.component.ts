@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CourseInterface } from './models';
 import { CoursesService } from './courses.service';
 import { MatDialog } from '@angular/material/dialog';
-import { CourseFormComponent } from './component/course-form/course-form.component';
+import { CourseFormComponent } from './components/course-form/course-form.component';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,6 +16,9 @@ export class CoursesComponent {
   displayedColumns = [
     'code',
     'name',
+    'hours',
+    'classes',
+    'teacher',
     'startDate',
     'finishDate',
     'price',

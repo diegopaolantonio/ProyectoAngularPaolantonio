@@ -17,6 +17,9 @@ describe('Pruebas de CoursesComponent', () => {
               {
                 code: 'ABCD1234',
                 name: 'Analisis Matematico 1',
+                hours: 1,
+                classes: 10,
+                teacher: 'Juan',
                 startDate: new Date('2024-02-05T03:00:00.000Z'),
                 finishDate: new Date('2024-07-15T03:00:00.000Z'),
                 price: 25350,
@@ -25,6 +28,9 @@ describe('Pruebas de CoursesComponent', () => {
               {
                 code: 'AB12CD34',
                 name: 'Fisica 1',
+                hours: 2,
+                classes: 20,
+                teacher: 'Pedro',
                 startDate: new Date('2024-02-13T03:00:00.000Z'),
                 finishDate: new Date('2024-07-23T03:00:00.000Z'),
                 price: 20500,
@@ -33,6 +39,9 @@ describe('Pruebas de CoursesComponent', () => {
               {
                 code: 'CDCD3412_2',
                 name: 'Algebra 1',
+                hours: 3,
+                classes: 30,
+                teacher: 'Alberto',
                 startDate: new Date('2024-03-01T03:00:00.000Z'),
                 finishDate: new Date('2024-11-30T03:00:00.000Z'),
                 price: 50700,
