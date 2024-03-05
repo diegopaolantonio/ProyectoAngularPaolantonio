@@ -4,6 +4,9 @@ import { UsersService } from './users.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import Swal from 'sweetalert2';
+import { UserDetailComponent } from './components/user-detail/user-detail.component';
+import { Store } from '@ngrx/store';
+import { DashboardActions } from '../../store/dashboard.actions';
 
 @Component({
   selector: 'app-users',
@@ -15,25 +18,30 @@ export class UsersComponent {
 
   displayedColumns: string[] = [
     'dni',
-    'fullName',
     'email',
-    'password',
-    'role',
+    'fullName',
+    'profile',
     'action',
   ];
 
   users: UserInterface[] = [];
 
-  constructor(private usersService: UsersService, public dialog: MatDialog) {
+  constructor(
+    private usersService: UsersService,
+    public matDialog: MatDialog,
+    private store: Store
+  ) {
     this.usersService.getUsers().subscribe({
       next: (users) => {
         this.users = users;
       },
     });
+
+    this.store.dispatch(DashboardActions.activeSection({ tittle: 'Usuarios' }));
   }
 
   onCreate(): void {
-    this.dialog
+    this.matDialog
       .open(UserFormComponent)
       .afterClosed()
       .subscribe({
@@ -65,7 +73,7 @@ export class UsersComponent {
   }
 
   onEdit(user: UserInterface) {
-    this.dialog
+    this.matDialog
       .open(UserFormComponent, {
         data: user,
       })
@@ -84,6 +92,22 @@ export class UsersComponent {
             });
           }
         },
+      });
+  }
+
+  onView(user: UserInterface) {
+    this.matDialog
+      .open(UserDetailComponent, {
+        data: user.id,
+      })
+      .afterClosed()
+      .subscribe({
+        next: () =>
+          this.usersService.getUsers().subscribe({
+            next: (users) => {
+              this.users = users;
+            },
+          }),
       });
   }
 

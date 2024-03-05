@@ -9,7 +9,6 @@ import { StudentsService } from '../../students/students.service';
 
 @Injectable()
 export class InscriptionsEffects {
-  
   loadInscriptions$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(InscriptionsActions.loadInscriptions),
@@ -103,8 +102,10 @@ export class InscriptionsEffects {
     return this.actions$.pipe(
       ofType(InscriptionsActions.loadStudents),
       concatMap(() =>
-          this.studentsService.getStudents().pipe(
-          map((students) => InscriptionsActions.loadStudentsSuccess({ students })),
+        this.studentsService.getStudents().pipe(
+          map((students) =>
+            InscriptionsActions.loadStudentsSuccess({ students })
+          ),
           catchError((error) =>
             of(InscriptionsActions.loadStudentsFailure({ error }))
           )
@@ -131,6 +132,6 @@ export class InscriptionsEffects {
     private actions$: Actions,
     private inscriptionsService: InscriptionsService,
     private studentsService: StudentsService,
-    private coursesService: CoursesService,
+    private coursesService: CoursesService
   ) {}
 }

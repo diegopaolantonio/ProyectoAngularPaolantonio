@@ -4,10 +4,15 @@ import { CourseInterface } from '../../../courses/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { selectInscriptionsCourses, selectInscriptionsStudents} from '../../store/inscriptions.selectors';
+import {
+  selectInscriptionsCourses,
+  selectInscriptionsStudents,
+} from '../../store/inscriptions.selectors';
 import { InscriptionsActions } from '../../store/inscriptions.actions';
 import { UpdateInscriptionInterface } from '../../models';
 import { StudentInterface } from '../../../students/models';
+import { UserInterface } from '../../../users/models';
+import { selectLoginUser } from '../../../../../auth/pages/login/store/login.selectors';
 
 @Component({
   selector: 'app-inscription-form',
@@ -15,9 +20,9 @@ import { StudentInterface } from '../../../students/models';
   styleUrl: './inscription-form.component.scss',
 })
 export class InscriptionFormComponent {
-
   students$: Observable<StudentInterface[]>;
   courses$: Observable<CourseInterface[]>;
+  user: UserInterface | null = null;
 
   inscriptionForm: FormGroup;
 
@@ -38,6 +43,9 @@ export class InscriptionFormComponent {
 
     this.students$ = this.store.select(selectInscriptionsStudents);
     this.courses$ = this.store.select(selectInscriptionsCourses);
+    this.store.select(selectLoginUser).subscribe({
+      next: (user) => (this.user = user),
+    });
 
     if (editInscription?.inscription) {
       this.inscriptionForm.patchValue(editInscription.inscription);
@@ -51,14 +59,24 @@ export class InscriptionFormComponent {
       if (!this.editInscription?.updateString) {
         this.store.dispatch(
           InscriptionsActions.createInscription({
-            inscription: this.inscriptionForm.value,
+            inscription: {
+              ...this.inscriptionForm.value,
+              createdUserId: this.user?.id,
+              createdDate: Date.now(),
+            },
           })
         );
       } else {
         this.store.dispatch(
           InscriptionsActions.updateInscription({
             inscriptionId: this.editInscription.inscription.id,
-            inscription: this.inscriptionForm.value,
+            inscription: {
+              ...this.inscriptionForm.value,
+              createdUserId: this.editInscription?.inscription.createdUserId,
+              createdDate: this.editInscription?.inscription.createdDate,
+              modifiedUserId: this.user?.id,
+              modifiedDate: Date.now(),
+            },
           })
         );
       }

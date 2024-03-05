@@ -12,6 +12,26 @@
           <p class="dataCardUser">ID:</p>
           <p style="display: inline">{{ inscription.id }}</p>
         </li>
+        <li>
+          <p class="dataCardUser">Usuario creador:</p>
+          <p style="display: inline">{{ inscription.createdUserId }}</p>
+        </li>
+        <li>
+          <p class="dataCardUser">Fecha de creacion:</p>
+          <p style="display: inline">
+            {{ inscription.createdDate | date : "EEEE dd/MM/yyyy" }}
+          </p>
+        </li>
+        <li>
+          <p class="dataCardUser">Usuario modifico:</p>
+          <p style="display: inline">{{ inscription.modifiedUserId }}</p>
+        </li>
+        <li>
+          <p class="dataCardUser">Fecha de modificacion:</p>
+          <p style="display: inline">
+            {{ inscription.modifiedDate | date : "EEEE dd/MM/yyyy" }}
+          </p>
+        </li>
         <hr />
         <li style="font-weight: bold" class="text-center">Estudiante</li>
         <li>

@@ -11,6 +11,7 @@ import { InscriptionFormComponent } from './components/inscription-form/inscript
 import { InscriptionsActions } from './store/inscriptions.actions';
 import { InscriptionsService } from './inscriptions.service';
 import { InscriptionDetailComponent } from './components/inscription-detail/inscription-detail.component';
+import { DashboardActions } from '../../store/dashboard.actions';
 
 @Component({
   selector: 'app-inscriptions',
@@ -48,6 +49,9 @@ export class InscriptionsComponent implements OnDestroy {
 
     this.isLoading$ = this.store.select(selectLoadingInscriptions);
     this.store.dispatch(InscriptionsActions.loadInscriptions());
+    this.store.dispatch(
+      DashboardActions.activeSection({ tittle: 'Inscripciones' })
+    );
   }
 
   createInscription(): void {
@@ -67,7 +71,6 @@ export class InscriptionsComponent implements OnDestroy {
   }
 
   viewInscription(inscription: InscriptionInterface): void {
-    console.log(inscription);
     this.matDialog.open(InscriptionDetailComponent, {
       data: inscription.id,
     });

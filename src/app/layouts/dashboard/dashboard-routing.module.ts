@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { adminGuard } from '../../core/guards/admin.guard';
-import { teacherGuard } from '../../core/guards/teacher.guard';
+import { userGuard } from '../../core/guards/user.guard';
 
 const routes: Routes = [
   {
@@ -17,6 +17,7 @@ const routes: Routes = [
   },
   {
     path: 'students',
+    canActivate: [userGuard],
     loadChildren: () =>
       import('./pages/students/students.module').then(
         (module) => module.StudentsModule
@@ -24,7 +25,7 @@ const routes: Routes = [
   },
   {
     path: 'courses',
-    // canActivate: [teacherGuard],
+    canActivate: [userGuard],
     loadChildren: () =>
       import('./pages/courses/courses.module').then(
         (module) => module.CoursesModule
@@ -32,8 +33,7 @@ const routes: Routes = [
   },
   {
     path: 'inscriptions',
-    canActivate: [adminGuard],
-    // canActivate: [teacherGuard],
+    canActivate: [userGuard],
     loadChildren: () =>
       import('./pages/inscriptions/inscriptions.module').then(
         (module) => module.InscriptionsModule

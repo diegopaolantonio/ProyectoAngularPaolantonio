@@ -20,14 +20,16 @@ export class UserFormComponent {
   ) {
     this.userForm = this.fb.group({
       dni: this.fb.control(null, [Validators.required]),
+      email: this.fb.control('', [Validators.required, Validators.email]),
       firstName: this.fb.control('', [Validators.required]),
       lastName: this.fb.control('', [Validators.required]),
-      email: this.fb.control('', [Validators.required, Validators.email]),
+      address: this.fb.control('', [Validators.required]),
+      phone: this.fb.control('', [Validators.required]),
       password: this.fb.control('', [
         Validators.required,
         Validators.minLength(6),
       ]),
-      role: this.fb.control('', [Validators.required]),
+      profile: this.fb.control('', [Validators.required]),
     });
 
     if (editUser) {

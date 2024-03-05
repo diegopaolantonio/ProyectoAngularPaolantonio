@@ -1,0 +1,102 @@
+<mat-card class="example-card">
+  <mat-card-content>
+    <mat-card-title
+      class="text-center"
+      style="font-weight: bold; text-decoration: underline"
+      >Datos de usuario
+    </mat-card-title>
+    <hr />
+    <div *ngIf="course$">
+      <ul style="list-style: none">
+        <li>
+          <p class="dataCardUser">ID:</p>
+          <p style="display: inline">{{ course.id }}</p>
+        </li>
+        <li>
+          <p class="dataCardUser">Codigo:</p>
+          <p style="display: inline">{{ course.code }}</p>
+        </li>
+        <li>
+          <p class="dataCardUser">Nombre:</p>
+          <p style="display: inline">{{ course.name }}</p>
+        </li>
+        <li>
+          <p class="dataCardUser">Cantidad de horas:</p>
+          <p style="display: inline">{{ course.hours }}</p>
+        </li>
+        <li>
+          <p class="dataCardUser">Cantidad de clases:</p>
+          <p style="display: inline">{{ course.classes }}</p>
+        </li>
+        <li>
+          <p class="dataCardUser">Profesor:</p>
+          <p style="display: inline">
+            {{ course.teacher }}
+          </p>
+        </li>
+        <li>
+          <p class="dataCardUser">Fecha de inicio:</p>
+          <p style="display: inline">
+            {{ course.startDate }}
+          </p>
+        </li>
+        <li>
+          <p class="dataCardUser">Fecha de fin:</p>
+          <p style="display: inline">
+            {{ course.finishDate }}
+          </p>
+        </li>
+        <li>
+          <p class="dataCardUser">Precio:</p>
+          <p style="display: inline">
+            {{ course.price }}
+          </p>
+        </li>
+      </ul>
+    </div>
+    <hr />
+    <div *ngIf="inscriptions?.length">
+      <p>Estudiantes inscriptos:</p>
+      <ul style="list-style: none">
+        <li *ngFor="let inscription of inscriptions">
+          <p class="dataCardUser">ID:</p>
+          <p style="display: inline">{{ inscription.student?.id }}{{ " " }}</p>
+          <p class="dataCardUser">Nombre:</p>
+          <p style="display: inline">{{ inscription.student?.name }}</p>
+        </li>
+      </ul>
+      <hr />
+    </div>
+    <div>
+      <button
+        type="reset"
+        mat-flat-button
+        color="accent"
+        class="m-2"
+        mat-dialog-close
+      >
+        Cerrar
+      </button>
+      <button
+        *ngIf="adminUser"
+        type="submit"
+        mat-flat-button
+        color="accent"
+        class="m-2"
+        (click)="onDelete(course.id)"
+      >
+        Eliminar
+      </button>
+      <button
+        *ngIf="adminUser"
+        type="submit"
+        mat-flat-button
+        color="primary"
+        class="m-2"
+        (click)="onUpdate(course)"
+      >
+        Modificar
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

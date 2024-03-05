@@ -6,9 +6,10 @@ import { UsersComponent } from './users.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { SharedModule } from '../../../../shared/shared.module';
 import { UsersService } from './users.service';
+import { UserDetailComponent } from './components/user-detail/user-detail.component';
 
 @NgModule({
-  declarations: [UsersComponent, UserFormComponent],
+  declarations: [UsersComponent, UserFormComponent, UserDetailComponent],
   imports: [CommonModule, UsersRoutingModule, SharedModule],
   providers: [UsersService],
 })

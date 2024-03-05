@@ -30,6 +30,18 @@
       </ul>
     </div>
     <hr />
+    <div *ngIf="inscriptions?.length">
+      <p>Cursos inscriptos:</p>
+      <ul style="list-style: none">
+        <li *ngFor="let inscription of inscriptions">
+          <p class="dataCardUser">Codigo:</p>
+          <p style="display: inline">{{ inscription.course?.code }}{{ " " }}</p>
+          <p class="dataCardUser">Nombre:</p>
+          <p style="display: inline">{{ inscription.course?.name }}</p>
+        </li>
+      </ul>
+      <hr />
+    </div>
     <div>
       <button
         type="reset"
@@ -41,6 +53,7 @@
         Cerrar
       </button>
       <button
+        *ngIf="adminUser"
         type="submit"
         mat-flat-button
         color="accent"
@@ -51,6 +64,7 @@
         Eliminar
       </button>
       <button
+        *ngIf="adminUser"
         type="submit"
         mat-flat-button
         color="primary"

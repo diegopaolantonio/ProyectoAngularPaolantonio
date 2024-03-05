@@ -4,6 +4,10 @@ import { CoursesService } from './courses.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CourseFormComponent } from './components/course-form/course-form.component';
 import Swal from 'sweetalert2';
+import { CourseDetailComponent } from './components/course-detail/course-detail.component';
+import { Store } from '@ngrx/store';
+import { selectLoginUser } from '../../../auth/pages/login/store/login.selectors';
+import { DashboardActions } from '../../store/dashboard.actions';
 
 @Component({
   selector: 'app-courses',
@@ -12,23 +16,15 @@ import Swal from 'sweetalert2';
 })
 export class CoursesComponent {
   codeExists: boolean = false;
+  adminUser: boolean = false;
 
-  displayedColumns = [
-    'code',
-    'name',
-    'hours',
-    'classes',
-    'teacher',
-    'startDate',
-    'finishDate',
-    'price',
-    'action',
-  ];
+  displayedColumns = ['code', 'name', 'teacher', 'startDate', 'action'];
 
   courses: CourseInterface[] = [];
 
   constructor(
     private coursesService: CoursesService,
+    private store: Store,
     public matDialog: MatDialog
   ) {
     this.coursesService.getCourses().subscribe({
@@ -36,6 +32,15 @@ export class CoursesComponent {
         this.courses = courses;
       },
     });
+
+    this.store.select(selectLoginUser).subscribe({
+      next: (user) =>
+        user?.profile.toUpperCase() === 'ADMIN'
+          ? (this.adminUser = true)
+          : (this.adminUser = false),
+    });
+
+    this.store.dispatch(DashboardActions.activeSection({ tittle: 'Cursos' }));
   }
 
   onCreate(): void {
@@ -114,5 +119,21 @@ export class CoursesComponent {
         });
       }
     });
+  }
+
+  onView(course: CourseInterface) {
+    this.matDialog
+      .open(CourseDetailComponent, {
+        data: course.id,
+      })
+      .afterClosed()
+      .subscribe({
+        next: () =>
+          this.coursesService.getCourses().subscribe({
+            next: (courses) => {
+              this.courses = courses;
+            },
+          }),
+      });
   }
 }

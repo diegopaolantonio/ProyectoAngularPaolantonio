@@ -14,7 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { appReducers } from './layouts/auth/pages/login/store';
+import { appReducers } from './core/store';
 
 registerLocaleData(esAR);
 

@@ -1,6 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { InscriptionInterface } from '../../models';
@@ -15,11 +19,20 @@ import { InscriptionsActions } from '../../store/inscriptions.actions';
 })
 export class InscriptionDetailComponent {
   inscription$: Observable<InscriptionInterface[]>;
-  inscription: InscriptionInterface = { id: '', studentId: '', courseId: '' };
+  inscription: InscriptionInterface = {
+    id: '',
+    studentId: '',
+    courseId: '',
+    createdUserId: '',
+    createdDate: new Date(),
+    modifiedUserId: '',
+    modifiedDate: new Date(),
+  };
 
   constructor(
     private store: Store,
     private matDialog: MatDialog,
+    private matDialogRef: MatDialogRef<InscriptionDetailComponent>,
     private httpClient: HttpClient,
     @Inject(MAT_DIALOG_DATA) private viewInscriptionId: string
   ) {
@@ -28,8 +41,8 @@ export class InscriptionDetailComponent {
     );
     this.inscription$.subscribe({
       next: (response) => {
-        console.log(response),
-        this.inscription = response[0]},
+        this.inscription = response[0];
+      },
     });
   }
 
@@ -37,11 +50,13 @@ export class InscriptionDetailComponent {
     this.matDialog.open(InscriptionFormComponent, {
       data: { inscription, updateString: 'update' },
     });
+    this.matDialogRef.close();
   }
 
   onDelete(inscriptionId: string): void {
     this.store.dispatch(
       InscriptionsActions.deleteInscription({ inscriptionId })
     );
+    this.matDialogRef.close();
   }
 }

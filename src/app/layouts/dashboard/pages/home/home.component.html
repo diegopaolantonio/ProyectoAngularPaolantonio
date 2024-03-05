@@ -1,12 +1,11 @@
 <div class="m-3">
-  <h1>Sistema de Usuarios, cursos y las inscripciones!</h1>
-  <p>Pagina de inicio, datos del usuario logueado:</p>
+  <h1>Sistema de Usuarios, cursos e inscripciones!</h1>
   <mat-card class="example-card">
     <mat-card-content>
       <mat-card-title
         class="text-center"
         style="font-weight: bold; text-decoration: underline"
-        >Datos de usuario
+        >Datos de usuario logueado
       </mat-card-title>
       <hr />
       <ul *ngIf="loginUser$ | async; let user" style="list-style: none">
@@ -28,7 +27,7 @@
         </li>
         <li>
           Rol:
-          <p class="dataCardUser">{{ user.role }}</p>
+          <p class="dataCardUser">{{ user.profile }}</p>
         </li>
       </ul>
     </mat-card-content>

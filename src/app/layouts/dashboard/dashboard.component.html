@@ -16,7 +16,7 @@
         >Inicio</a
       >
     </div>
-    <div class="row m-2">
+    <div *ngIf="adminUser" class="row m-2">
       <a
         #usersLink="routerLinkActive"
         routerLinkActive
@@ -78,13 +78,14 @@
       <mat-icon>menu</mat-icon>
     </button>
     <span
+      *ngIf="tittle$"
       class="w-100"
       style="text-align: center; font-weight: bold"
       appFontSize
       size="24px"
-      >DASHBOARD</span
     >
-    <div></div>
+      INSTITUTO DE APOYO UNIVERSITARIO | {{ tittle$ | async | uppercase }}
+    </span>
     <div>
       <div>
         <span *ngIf="loginUser$ | async; let user">{{ user.email }}</span>

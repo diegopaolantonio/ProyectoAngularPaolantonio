@@ -11,6 +11,8 @@ import {
 import { StudentsActions } from './store/students.actions';
 import { StudentFormComponent } from './components/student-form/student-form.component';
 import { StudentDetailComponent } from './components/student-detail/student-detail.component';
+import { selectLoginUser } from '../../../auth/pages/login/store/login.selectors';
+import { DashboardActions } from '../../store/dashboard.actions';
 
 @Component({
   selector: 'app-students',
@@ -21,6 +23,7 @@ export class StudentsComponent {
   students: StudentInterface[] = [];
   studentsSubscription?: Subscription;
   isLoading$: Observable<boolean>;
+  adminUser: boolean = false;
 
   destroyed$ = new Subject();
 
@@ -40,6 +43,15 @@ export class StudentsComponent {
 
     this.isLoading$ = this.store.select(selectLoadingStudents);
     this.store.dispatch(StudentsActions.loadStudents());
+
+    this.store.select(selectLoginUser).subscribe({
+      next: (user) =>
+        user?.profile.toUpperCase() === 'ADMIN'
+          ? (this.adminUser = true)
+          : (this.adminUser = false),
+    });
+
+    this.store.dispatch(DashboardActions.activeSection({ tittle: 'Estudiantes' }));
   }
 
   createStudent(): void {

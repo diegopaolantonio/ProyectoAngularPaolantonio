@@ -2,38 +2,14 @@
 
 <div mat-dialog-content class="container text-center">
   <form [formGroup]="userForm" class="col-12">
-    <!-- DNI -->
     <div class="row">
+      <!-- DNI -->
       <div class="col-6">
         <mat-form-field class="m-2 w-100">
           <mat-label>DNI</mat-label>
           <input formControlName="dni" matInput type="number" />
           <mat-error style="font-size: smaller">{{
             userForm.get("dni")?.errors | validationErrors
-          }}</mat-error>
-        </mat-form-field>
-      </div>
-
-      <!-- Nombre -->
-      <div class="col-6">
-        <mat-form-field class="m-2 w-100">
-          <mat-label>Nombre</mat-label>
-          <input formControlName="firstName" matInput type="text" />
-          <mat-error style="font-size: smaller">{{
-            userForm.get("firstName")?.errors | validationErrors
-          }}</mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-
-    <!-- Apellido -->
-    <div class="row">
-      <div class="col-6">
-        <mat-form-field class="m-2 w-100">
-          <mat-label>Apellido</mat-label>
-          <input formControlName="lastName" matInput type="text" />
-          <mat-error style="font-size: smaller">{{
-            userForm.get("lastName")?.errors | validationErrors
           }}</mat-error>
         </mat-form-field>
       </div>
@@ -55,8 +31,56 @@
       </div>
     </div>
 
-    <!-- Contraseña -->
     <div class="row">
+      <!-- Nombre -->
+      <div class="col-6">
+        <mat-form-field class="m-2 w-100">
+          <mat-label>Nombre</mat-label>
+          <input formControlName="firstName" matInput type="text" />
+          <mat-error style="font-size: smaller">{{
+            userForm.get("firstName")?.errors | validationErrors
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Apellido -->
+      <div class="col-6">
+        <mat-form-field class="m-2 w-100">
+          <mat-label>Apellido</mat-label>
+          <input formControlName="lastName" matInput type="text" />
+          <mat-error style="font-size: smaller">{{
+            userForm.get("lastName")?.errors | validationErrors
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Direccion -->
+      <div class="col-6">
+        <mat-form-field class="m-2 w-100">
+          <mat-label>Direccion</mat-label>
+          <input formControlName="address" matInput type="text" />
+          <mat-error style="font-size: smaller">{{
+            userForm.get("address")?.errors | validationErrors
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Telefono -->
+      <div class="col-6">
+        <mat-form-field class="m-2 w-100">
+          <mat-label>Telefono</mat-label>
+          <input formControlName="phone" matInput type="number" />
+          <mat-error style="font-size: smaller">{{
+            userForm.get("phone")?.errors | validationErrors
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Contraseña -->
       <div class="col-6">
         <mat-form-field class="m-2 w-100">
           <mat-label>Contraseña</mat-label>
@@ -84,12 +108,10 @@
       <!-- Rol -->
       <div class="col-6">
         <mat-form-field class="m-2 w-100">
-          <mat-label>Rol</mat-label>
-          <mat-select formControlName="role">
+          <mat-label>Perfil</mat-label>
+          <mat-select formControlName="profile">
             <mat-option value="Admin">Admin</mat-option>
             <mat-option value="User">User</mat-option>
-            <mat-option value="Alumno">Alumno</mat-option>
-            <mat-option value="Profesor">Profesor</mat-option>
           </mat-select>
           <mat-error style="font-size: smaller">{{
             userForm.get("role")?.errors | validationErrors

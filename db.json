@@ -6,7 +6,7 @@
       "lastName": "Perez",
       "email": "juan@mail.com",
       "password": "123456",
-      "role": "Admin",
+      "profile": "Admin",
       "id": "6a05",
       "userToken": "6a05"
     },
@@ -16,7 +16,7 @@
       "lastName": "Martinez",
       "email": "pedro@mail.com",
       "password": "123456",
-      "role": "Alumno",
+      "profile": "Admin",
       "id": "c7de",
       "userToken": "c7de"
     },
@@ -26,7 +26,7 @@
       "lastName": "Gomez",
       "email": "alberto@mail.com",
       "password": "123456",
-      "role": "Profesor",
+      "profile": "User",
       "id": "8043",
       "userToken": "8043"
     },
@@ -36,7 +36,7 @@
       "lastName": "Vilca",
       "email": "fernando@mail.com",
       "password": "123456",
-      "role": "Alumno",
+      "profile": "User",
       "id": "9a7e",
       "userToken": "9a7e"
     },
@@ -46,29 +46,9 @@
       "lastName": "Pereira",
       "email": "franco@mail.com",
       "password": "123456",
-      "role": "Profesor",
+      "profile": "",
       "id": "70ed",
       "userToken": "70ed"
-    },
-    {
-      "dni": 66666666,
-      "firstName": "Yamile",
-      "lastName": "Natel",
-      "email": "yamile@mail.com",
-      "password": "125412",
-      "role": "Admin",
-      "id": "8b17",
-      "userToken": "8b17"
-    },
-    {
-      "id": "249d",
-      "dni": 123,
-      "firstName": "zxc",
-      "lastName": "zxc",
-      "email": "zxc@mail.com",
-      "password": "123456",
-      "role": "User",
-      "userToken": " ZPbRmxaVkgbc86H"
     }
   ],
   "students": [
@@ -139,6 +119,17 @@
       "startDate": "2024-02-01T03:00:00.000Z",
       "finishDate": "2024-02-29T03:00:00.000Z",
       "price": 3333
+    },
+    {
+      "code": "123",
+      "name": "123",
+      "hours": 123,
+      "classes": 123,
+      "teacher": "123",
+      "startDate": "2024-03-05T03:00:00.000Z",
+      "finishDate": "2024-03-28T03:00:00.000Z",
+      "price": 123,
+      "id": "20e3"
     }
   ],
   "inscriptions": [
@@ -171,6 +162,20 @@
       "id": "f76c",
       "studentId": "fd8a",
       "courseId": "1541"
+    },
+    {
+      "id": "7830",
+      "studentId": "1da8",
+      "courseId": "5e25"
+    },
+    {
+      "studentId": "5137",
+      "courseId": "5e25",
+      "createdUserId": "8043",
+      "createdDate": 1709591913177,
+      "modifiedUserId": "8043",
+      "modifiedDate": 1709591919696,
+      "id": "0bd5"
     }
   ]
 }

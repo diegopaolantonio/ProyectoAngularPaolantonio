@@ -5,6 +5,10 @@ export interface InscriptionInterface {
   id: string;
   studentId: string;
   courseId: string;
+  createdUserId: string;
+  createdDate: Date;
+  modifiedUserId: string | null;
+  modifiedDate: Date | null;
   student?: StudentInterface;
   course?: CourseInterface;
 }
@@ -12,6 +16,10 @@ export interface InscriptionInterface {
 export interface CreateInscriptionInterface {
   studentId: string | null;
   courseId: string | null;
+  createdUserId: string;
+  createdDate: Date;
+  modifiedUserId: string | null;
+  modifiedDate: Date | null;
 }
 
 export interface UpdateInscriptionInterface {

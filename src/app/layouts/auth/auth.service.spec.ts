@@ -32,8 +32,10 @@ describe('Pruebas de AuthService', () => {
         firstName: 'FakeNombre',
         lastName: 'FakeApellido',
         email: 'fake@mail.com',
+        address: 'FakeAddress',
+        phone: '12',
         password: 'password',
-        role: 'Admin',
+        profile: 'Admin',
         userToken: 'fakeToken',
       },
     ];
