@@ -4,6 +4,8 @@ import { MockProvider } from 'ng-mocks';
 import { AuthService } from '../../auth.service';
 import { SharedModule } from '../../../../shared/shared.module';
 import { Validators } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { appReducers } from '../../../../core/store';
 
 describe('Pruebas de LoginComponent', () => {
   let loginComponent: LoginComponent;
@@ -11,7 +13,7 @@ describe('Pruebas de LoginComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
-      imports: [SharedModule],
+      imports: [SharedModule, StoreModule.forRoot(appReducers, {})],
       providers: [MockProvider(AuthService)],
     });
 

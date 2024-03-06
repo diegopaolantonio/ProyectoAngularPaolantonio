@@ -3,6 +3,8 @@ import { CoursesComponent } from './courses.component';
 import { CoursesService } from './courses.service';
 import { MockProvider } from 'ng-mocks';
 import { of } from 'rxjs';
+import { StoreModule } from '@ngrx/store';
+import { appReducers } from '../../../../core/store';
 
 describe('Pruebas de CoursesComponent', () => {
   let coursesComponent: CoursesComponent;
@@ -50,6 +52,7 @@ describe('Pruebas de CoursesComponent', () => {
             ]),
         }),
       ],
+      imports:[StoreModule.forRoot(appReducers, {})]
     });
     coursesComponent =
       TestBed.createComponent(CoursesComponent).componentInstance;
@@ -59,10 +62,13 @@ describe('Pruebas de CoursesComponent', () => {
     expect(coursesComponent).toBeTruthy();
   });
 
-  it('El componente debe contener las propiedades "id", "code", "name", "startDate", "finishDate" y "price"', () => {
+  it('El componente debe contener las propiedades "id", "code", "name", "hours", "classes", "teacher", "startDate", "finishDate" y "price"', () => {
     expect(coursesComponent.courses[0].hasOwnProperty('id')).toBeTrue();
     expect(coursesComponent.courses[0].hasOwnProperty('code')).toBeTrue();
     expect(coursesComponent.courses[0].hasOwnProperty('name')).toBeTrue();
+    expect(coursesComponent.courses[0].hasOwnProperty('hours')).toBeTrue();
+    expect(coursesComponent.courses[0].hasOwnProperty('classes')).toBeTrue();
+    expect(coursesComponent.courses[0].hasOwnProperty('teacher')).toBeTrue();
     expect(coursesComponent.courses[0].hasOwnProperty('startDate')).toBeTrue();
     expect(coursesComponent.courses[0].hasOwnProperty('finishDate')).toBeTrue();
     expect(coursesComponent.courses[0].hasOwnProperty('price')).toBeTrue();
@@ -83,12 +89,11 @@ describe('Pruebas de CoursesComponent', () => {
     expect(coursesComponent.courses.length).toEqual(3);
   });
 
-  it('Las columnas de la tabla de productos deben ser (displayedColumns): "id", "productName", "createdAt", "actions"', () => {
+  it('Las columnas de la tabla de cursos deben ser (displayedColumns): "code", "name", "teacher", "startDate", "action"', () => {
     expect(coursesComponent.displayedColumns).toContain('code');
     expect(coursesComponent.displayedColumns).toContain('name');
+    expect(coursesComponent.displayedColumns).toContain('teacher');
     expect(coursesComponent.displayedColumns).toContain('startDate');
-    expect(coursesComponent.displayedColumns).toContain('finishDate');
-    expect(coursesComponent.displayedColumns).toContain('price');
     expect(coursesComponent.displayedColumns).toContain('action');
   });
 });

@@ -4,7 +4,9 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
+import { StoreModule } from '@ngrx/store';
 import { UserInterface } from '../dashboard/pages/users/models';
+import { appReducers } from '../../core/store';
 
 describe('Pruebas de AuthService', () => {
   let authService: AuthService;
@@ -13,7 +15,7 @@ describe('Pruebas de AuthService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [AuthService],
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, StoreModule.forRoot(appReducers, {})],
     });
 
     authService = TestBed.inject(AuthService);
@@ -46,7 +48,6 @@ describe('Pruebas de AuthService', () => {
         next: () => {
           const mockToken = localStorage.getItem('user_Token');
 
-          expect(authService.authUser).toEqual(FAKE_USER[0]);
           expect(mockToken).toEqual(FAKE_USER[0].userToken);
         },
       });

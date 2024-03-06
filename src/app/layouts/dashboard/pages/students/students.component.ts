@@ -51,7 +51,9 @@ export class StudentsComponent {
           : (this.adminUser = false),
     });
 
-    this.store.dispatch(DashboardActions.activeSection({ tittle: 'Estudiantes' }));
+    this.store.dispatch(
+      DashboardActions.activeSection({ tittle: 'Estudiantes' })
+    );
   }
 
   createStudent(): void {
