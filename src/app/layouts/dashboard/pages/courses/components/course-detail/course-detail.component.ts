@@ -15,6 +15,7 @@ import { Store } from '@ngrx/store';
 import { selectLoginUser } from '../../../../../auth/pages/login/store/login.selectors';
 import { StudentInterface } from '../../../students/models';
 import { InscriptionInterface } from '../../../inscriptions/models';
+import { InscriptionsService } from '../../../inscriptions/inscriptions.service';
 
 @Component({
   selector: 'app-course-detail',
@@ -39,6 +40,7 @@ export class CourseDetailComponent {
 
   constructor(
     private coursesService: CoursesService,
+    private inscriptionsService: InscriptionsService,
     private httpClient: HttpClient,
     private matDialog: MatDialog,
     private matDialogRef: MatDialogRef<CourseDetailComponent>,
@@ -114,6 +116,32 @@ export class CourseDetailComponent {
             );
           },
         });
+      }
+    });
+  }
+
+  onDeleteStudent(inscription: InscriptionInterface): void {
+    Swal.fire({
+      title: 'Esta seguro de eliminar la inscripcion?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.inscriptionsService
+          .deleteInscriptionById(inscription.id)
+          .subscribe({
+            next: (inscriptions) => {
+              Swal.fire({
+                title: 'Inscripcion eliminada!',
+                icon: 'success',
+              }).then(() => {
+                this.matDialogRef.close(inscriptions);
+              });
+            },
+          });
       }
     });
   }

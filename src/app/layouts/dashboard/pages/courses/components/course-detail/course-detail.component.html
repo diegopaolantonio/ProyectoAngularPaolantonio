@@ -63,6 +63,15 @@
           <p style="display: inline">{{ inscription.student?.id }}{{ " " }}</p>
           <p class="dataCardUser">Nombre:</p>
           <p style="display: inline">{{ inscription.student?.name }}</p>
+          <button
+            matSuffix
+            mat-icon-button
+            color="warn"
+            focusable="false"
+            (click)="onDeleteStudent(inscription)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
         </li>
       </ul>
       <hr />

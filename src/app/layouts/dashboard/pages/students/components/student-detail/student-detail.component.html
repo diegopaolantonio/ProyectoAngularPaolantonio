@@ -38,6 +38,15 @@
           <p style="display: inline">{{ inscription.course?.code }}{{ " " }}</p>
           <p class="dataCardUser">Nombre:</p>
           <p style="display: inline">{{ inscription.course?.name }}</p>
+          <button
+            matSuffix
+            mat-icon-button
+            color="warn"
+            focusable="false"
+            (click)="onDeleteCourse(inscription)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
         </li>
       </ul>
       <hr />

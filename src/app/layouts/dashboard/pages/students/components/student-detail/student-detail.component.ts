@@ -1,6 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { StudentInterface, updateStudentInterface } from '../../models';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { StudentFormComponent } from '../student-form/student-form.component';
 import { Store } from '@ngrx/store';
 import { StudentsActions } from '../../store/students.actions';
@@ -8,6 +12,8 @@ import { selectLoginUser } from '../../../../../auth/pages/login/store/login.sel
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../../../environments/environment';
 import { InscriptionInterface } from '../../../inscriptions/models';
+import Swal from 'sweetalert2';
+import { InscriptionsService } from '../../../inscriptions/inscriptions.service';
 
 @Component({
   selector: 'app-student-detail',
@@ -22,7 +28,9 @@ export class StudentDetailComponent {
   constructor(
     private store: Store,
     private matDialog: MatDialog,
+    private matDialogRef: MatDialogRef<StudentDetailComponent>,
     private httpClient: HttpClient,
+    private inscriptionsService: InscriptionsService,
     @Inject(MAT_DIALOG_DATA) private viewStudent?: StudentInterface
   ) {
     if (viewStudent) {
@@ -53,5 +61,31 @@ export class StudentDetailComponent {
 
   onDelete(studentId: string): void {
     this.store.dispatch(StudentsActions.deleteStudent({ studentId }));
+  }
+
+  onDeleteCourse(inscription: InscriptionInterface): void {
+    Swal.fire({
+      title: 'Esta seguro de eliminar la inscripcion?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.inscriptionsService
+          .deleteInscriptionById(inscription.id)
+          .subscribe({
+            next: (inscriptions) => {
+              Swal.fire({
+                title: 'Inscripcion eliminada!',
+                icon: 'success',
+              }).then(() => {
+                this.matDialogRef.close(inscriptions);
+              });
+            },
+          });
+      }
+    });
   }
 }
