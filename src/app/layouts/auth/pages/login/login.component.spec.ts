@@ -24,7 +24,7 @@ describe('Pruebas de LoginComponent', () => {
     expect(loginComponent).toBeTruthy();
   });
 
-  it('El email debe tener los controles requeridos (required and email type)', () => {
+  it('El email debe tener las validaciones de requerido e email', () => {
     expect(
       loginComponent.loginForm.get('email')?.hasValidator(Validators.required)
     ).toBeTrue();
@@ -33,7 +33,7 @@ describe('Pruebas de LoginComponent', () => {
     ).toBeTrue();
   });
 
-  it('La contrasena debe tener el control requerido (required)', () => {
+  it('La contrasena debe tener la validacion de requerido', () => {
     expect(
       loginComponent.loginForm
         .get('password')

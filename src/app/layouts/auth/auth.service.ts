@@ -7,7 +7,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Store } from '@ngrx/store';
 import { LoginActions } from './pages/login/store/login.actions';
-import { selectLoginUser } from './pages/login/store/login.selectors';
 
 interface LoginData {
   email: null | string;
@@ -18,14 +17,12 @@ interface LoginData {
   providedIn: 'root',
 })
 export class AuthService {
-
   constructor(
     private router: Router,
     private loadingService: LoadingService,
     private httpClient: HttpClient,
     private store: Store
-  ) {
-  }
+  ) {}
 
   private setAuthUser(user: UserInterface): void {
     this.store.dispatch(LoginActions.loadLogin({ user }));
@@ -39,7 +36,7 @@ export class AuthService {
       )
       .pipe(
         tap((response) => {
-          if (!!response[0]) {
+          if (!!response[0] && response[0].userToken !== 'fakeToken') {
             this.setAuthUser(response[0]);
             this.router.navigate(['dashboard', 'home']);
           } else {

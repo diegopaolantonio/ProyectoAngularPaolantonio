@@ -52,7 +52,7 @@ describe('Pruebas de CoursesComponent', () => {
             ]),
         }),
       ],
-      imports:[StoreModule.forRoot(appReducers, {})]
+      imports: [StoreModule.forRoot(appReducers, {})],
     });
     coursesComponent =
       TestBed.createComponent(CoursesComponent).componentInstance;
