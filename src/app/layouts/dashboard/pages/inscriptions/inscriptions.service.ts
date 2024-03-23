@@ -5,20 +5,32 @@ import {
   CreateInscriptionInterface,
 } from './models/index';
 import { environment } from '../../../../../environments/environment';
-import { catchError, concatMap, throwError } from 'rxjs';
+import { catchError, concatMap, finalize, of, throwError } from 'rxjs';
 import { CourseInterface } from '../courses/models';
 import { StudentInterface } from '../students/models';
+import { LoadingService } from '../../../../core/services/loading.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InscriptionsService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private loadingService: LoadingService, private httpClient: HttpClient) {}
 
   getInscriptions() {
+    this.loadingService.setIsLoading(true);
+
     return this.httpClient.get<InscriptionInterface[]>(
       `${environment.apiURL}/inscriptions?_embed=student&_embed=course`
-    );
+    ).pipe(
+      // delay(1000),
+      finalize(() => {
+        this.loadingService.setIsLoading(false);
+      }),
+      catchError((error) => {
+        alert(`Error al cargar las inscripciones, ${error.statusText}`);
+        return of([]);
+      })
+    );;
   }
 
   getInscriptionsByStudentId(studentId: string) {
