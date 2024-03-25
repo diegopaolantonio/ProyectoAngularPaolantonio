@@ -35,6 +35,10 @@ export class CourseDetailComponent {
     finishDate: new Date(),
     price: 0,
   };
+  viewCourseId: string;
+  currentPage: number;
+  pageSize: number;
+
   inscriptions: InscriptionInterface[] | null = null;
   adminUser: boolean = false;
 
@@ -45,10 +49,13 @@ export class CourseDetailComponent {
     private matDialog: MatDialog,
     private matDialogRef: MatDialogRef<CourseDetailComponent>,
     private store: Store,
-    @Inject(MAT_DIALOG_DATA) private viewCourseId: string
+    @Inject(MAT_DIALOG_DATA) private data: Array<any>
   ) {
+    this.viewCourseId = data[0];
+    this.currentPage = data[1];
+    this.pageSize = data[2];
     this.course$ = this.httpClient.get<CourseInterface[]>(
-      `${environment.apiURL}/courses?id=${viewCourseId}`
+      `${environment.apiURL}/courses?id=${this.viewCourseId}`
     );
     this.course$.subscribe({
       next: (response) => {
@@ -82,16 +89,23 @@ export class CourseDetailComponent {
       .subscribe({
         next: (result) => {
           if (result) {
-            this.coursesService.updateCourseById(course.id, result).subscribe({
-              next: (courses) => {
-                Swal.fire({
-                  icon: 'success',
-                  title: 'Curso modificado',
-                }).then(() => {
-                  this.matDialogRef.close(courses);
-                });
-              },
-            });
+            this.coursesService
+              .updateCourseById(
+                course.id,
+                result,
+                this.currentPage,
+                this.pageSize
+              )
+              .subscribe({
+                next: (courses) => {
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Curso modificado',
+                  }).then(() => {
+                    this.matDialogRef.close(courses);
+                  });
+                },
+              });
           }
         },
       });
@@ -107,15 +121,18 @@ export class CourseDetailComponent {
       confirmButtonText: 'Si',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.coursesService.deleteCourseById(courseId).subscribe({
-          next: (courses) => {
-            Swal.fire({ title: 'Curso eliminado!', icon: 'success' }).then(
-              () => {
-                this.matDialogRef.close(courses);
-              }
-            );
-          },
-        });
+        this.coursesService
+          .deleteCourseById(courseId, this.currentPage, this.pageSize)
+          .subscribe({
+            next: (courses) => {
+              Swal.fire({ title: 'Curso eliminado!', icon: 'success' }).then(
+                () => {
+                  this.matDialogRef.close(courses);
+                  location.reload();
+                }
+              );
+            },
+          });
       }
     });
   }

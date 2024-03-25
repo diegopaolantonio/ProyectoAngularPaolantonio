@@ -3,92 +3,101 @@
   style="height: 100vh"
   autosize
 >
-    <mat-drawer #drawer class="example-sidenav" mode="side">
-      <p class="text-center m-1">Secciones</p>
-      <div *ngIf="dataLoadingDone">
-
-        <div class="row m-2">
-          <a
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <p class="text-center m-1">Secciones</p>
+    <div *ngIf="dataLoadingDone">
+      <div class="row m-2">
+        <a
           #homeLink="routerLinkActive"
           routerLinkActive
           [activated]="homeLink.isActive"
           routerLink="home"
           mat-list-item
-          [ngClass] = "tittle === 'INICIO' ? 'btn btn-primary' : 'btn btn-secondary'"
+          [ngClass]="
+            tittle === 'INICIO' ? 'btn btn-primary' : 'btn btn-secondary'
+          "
           >Inicio</a
-          >
-        </div>
-    <div *ngIf="adminUser" class="row m-2">
-      <a
-      #usersLink="routerLinkActive"
-      routerLinkActive
-      [activated]="usersLink.isActive"
-      routerLink="users"
-      mat-list-item
-      [ngClass] = "tittle === 'USUARIOS' ? 'btn btn-primary' : 'btn btn-secondary'"
-      >Usuarios</a
-      >
-    </div>
-    <div *ngIf="userUser" class="row m-2">
-      <a
-      #studentsLink="routerLinkActive"
-      routerLinkActive
-      [activated]="studentsLink.isActive"
-      routerLink="students"
-      mat-list-item
-      [ngClass] = "tittle === 'ESTUDIANTES' ? 'btn btn-primary' : 'btn btn-secondary'"
-      >Estudiantes</a
-      >
-    </div>
-    <div *ngIf="userUser" class="row m-2">
-      <a
-      #coursesLink="routerLinkActive"
-      routerLinkActive
-      [activated]="coursesLink.isActive"
-      routerLink="courses"
-      mat-list-item
-      [ngClass] = "tittle === 'CURSOS' ? 'btn btn-primary' : 'btn btn-secondary'"
-      >Cursos</a
-      >
-    </div>
-    <div *ngIf="userUser" class="row m-2">
-      <a
-      #inscriptionsLink="routerLinkActive"
-      routerLinkActive
-      [activated]="inscriptionsLink.isActive"
-      routerLink="inscriptions"
-      mat-list-item
-      [ngClass] = "tittle === 'INSCRIPCIONES' ? 'btn btn-primary' : 'btn btn-secondary'"
-      >Inscripciones</a
-      >
-    </div>
-    <div class="row m-2">
-      <!-- <a class="btn btn-secondary">Cerrar sesion</a> -->
-      <button class="btn btn-secondary" (click)="onLogout()">
-        Cerrar sesion
-      </button>
-    </div>
+        >
+      </div>
+      <div *ngIf="adminUser" class="row m-2">
+        <a
+          #usersLink="routerLinkActive"
+          routerLinkActive
+          [activated]="usersLink.isActive"
+          routerLink="users"
+          mat-list-item
+          [ngClass]="
+            tittle === 'USUARIOS' ? 'btn btn-primary' : 'btn btn-secondary'
+          "
+          >Usuarios</a
+        >
+      </div>
+      <div *ngIf="userUser" class="row m-2">
+        <a
+          #studentsLink="routerLinkActive"
+          routerLinkActive
+          [activated]="studentsLink.isActive"
+          routerLink="students"
+          mat-list-item
+          [ngClass]="
+            tittle === 'ESTUDIANTES' ? 'btn btn-primary' : 'btn btn-secondary'
+          "
+          >Estudiantes</a
+        >
+      </div>
+      <div *ngIf="userUser" class="row m-2">
+        <a
+          #coursesLink="routerLinkActive"
+          routerLinkActive
+          [activated]="coursesLink.isActive"
+          routerLink="courses"
+          mat-list-item
+          [ngClass]="
+            tittle === 'CURSOS' ? 'btn btn-primary' : 'btn btn-secondary'
+          "
+          >Cursos</a
+        >
+      </div>
+      <div *ngIf="userUser" class="row m-2">
+        <a
+          #inscriptionsLink="routerLinkActive"
+          routerLinkActive
+          [activated]="inscriptionsLink.isActive"
+          routerLink="inscriptions"
+          mat-list-item
+          [ngClass]="
+            tittle === 'INSCRIPCIONES' ? 'btn btn-primary' : 'btn btn-secondary'
+          "
+          >Inscripciones</a
+        >
+      </div>
+      <div class="row m-2">
+        <!-- <a class="btn btn-secondary">Cerrar sesion</a> -->
+        <button class="btn btn-secondary" (click)="onLogout()">
+          Cerrar sesion
+        </button>
+      </div>
     </div>
   </mat-drawer>
-  
+
   <mat-toolbar color="primary">
     <button
-    mat-icon-button
-    class="example-icon"
-    aria-label="Example icon-button with menu icon"
-    (click)="drawer.toggle()"
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with menu icon"
+      (click)="drawer.toggle()"
     >
       <mat-icon>menu</mat-icon>
     </button>
     <span
-    *ngIf="tittle$"
-    class="w-100"
-    style="text-align: center; font-weight: bold"
-    appFontSize
-    size="24px"
+      *ngIf="tittle$"
+      class="w-100"
+      style="text-align: center; font-weight: bold"
+      appFontSize
+      size="24px"
     >
-    INSTITUTO DE APOYO UNIVERSITARIO | {{ tittle$ | async | uppercase }}
-  </span>
+      INSTITUTO DE APOYO UNIVERSITARIO | {{ tittle$ | async | uppercase }}
+    </span>
     <div>
       <div>
         <span *ngIf="loginUser$ | async; let user">{{ user.email }}</span>

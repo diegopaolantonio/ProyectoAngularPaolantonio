@@ -36,11 +36,9 @@ export class AuthService {
       )
       .pipe(
         tap((response) => {
+          this.setAuthUser(response[0]);
           if (!!response[0] && response[0].userToken !== 'fakeToken') {
-            this.setAuthUser(response[0]);
             this.router.navigate(['dashboard', 'home']);
-          } else {
-            alert('Email o password invalidos');
           }
         })
       );

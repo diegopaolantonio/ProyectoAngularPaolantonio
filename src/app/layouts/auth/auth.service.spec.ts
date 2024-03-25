@@ -49,6 +49,7 @@ describe('Pruebas de AuthService', () => {
           const mockToken = localStorage.getItem('user_Token');
 
           expect(mockToken).toEqual(FAKE_USER[0].userToken);
+          localStorage.removeItem('user_Token');
         },
       });
 

@@ -8,6 +8,8 @@ import { CourseDetailComponent } from './components/course-detail/course-detail.
 import { Store } from '@ngrx/store';
 import { selectLoginUser } from '../../../auth/pages/login/store/login.selectors';
 import { DashboardActions } from '../../store/dashboard.actions';
+import { Pagination } from '../../../../core/models';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-courses',
@@ -21,26 +23,47 @@ export class CoursesComponent {
   displayedColumns = ['code', 'name', 'teacher', 'startDate', 'action'];
 
   courses: CourseInterface[] = [];
+  totalItems = 0;
+  pageSize = 5;
+  currentPage = 1;
 
   constructor(
     private coursesService: CoursesService,
     private store: Store,
     public matDialog: MatDialog
   ) {
-    this.coursesService.getCourses().subscribe({
-      next: (courses) => {
-        this.courses = courses;
-      },
-    });
-
     this.store.select(selectLoginUser).subscribe({
       next: (user) =>
         user?.profile.toUpperCase() === 'ADMIN'
           ? (this.adminUser = true)
           : (this.adminUser = false),
     });
-
+    this.getPageData();
     this.store.dispatch(DashboardActions.activeSection({ tittle: 'Cursos' }));
+  }
+
+  // ngOnInit(): void {
+  //   this.getPageData();
+  // }
+
+  getPageData(): void {
+    this.coursesService.getCourses(this.currentPage, this.pageSize).subscribe({
+      next: (paginationResult: Pagination<CourseInterface[]>) => {
+        this.totalItems = paginationResult.items;
+        this.courses = paginationResult.data;
+      },
+    });
+  }
+
+  onPage(ev: PageEvent) {
+    this.currentPage = ev.pageIndex + 1;
+    this.pageSize = ev.pageSize;
+    this.coursesService.getCourses(this.currentPage, this.pageSize).subscribe({
+      next: (paginateResult: Pagination<CourseInterface[]>) => {
+        this.totalItems = paginateResult.items;
+        this.courses = paginateResult.data;
+      },
+    });
   }
 
   onCreate(): void {
@@ -55,15 +78,17 @@ export class CoursesComponent {
           });
           if (course) {
             if (!this.codeExists) {
-              this.coursesService.createCourse(course).subscribe({
-                next: (courses) => {
-                  this.courses = courses;
-                  Swal.fire({
-                    icon: 'success',
-                    title: 'Curso creado',
-                  });
-                },
-              });
+              this.coursesService
+                .createCourse(course, this.currentPage, this.pageSize)
+                .subscribe({
+                  next: (courses) => {
+                    this.courses = courses.data;
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Curso creado',
+                    }).finally(() => location.reload());
+                  },
+                });
             } else {
               Swal.fire({
                 icon: 'error',
@@ -84,15 +109,22 @@ export class CoursesComponent {
       .subscribe({
         next: (result) => {
           if (result) {
-            this.coursesService.updateCourseById(course.id, result).subscribe({
-              next: (courses) => {
-                this.courses = courses;
-                Swal.fire({
-                  icon: 'success',
-                  title: 'Curso modificado',
-                });
-              },
-            });
+            this.coursesService
+              .updateCourseById(
+                course.id,
+                result,
+                this.currentPage,
+                this.pageSize
+              )
+              .subscribe({
+                next: (courses) => {
+                  this.courses = courses.data;
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Curso modificado',
+                  });
+                },
+              });
           }
         },
       });
@@ -108,15 +140,17 @@ export class CoursesComponent {
       confirmButtonText: 'Si',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.coursesService.deleteCourseById(id).subscribe({
-          next: (courses) => {
-            this.courses = courses;
-            Swal.fire({
-              title: 'Curso eliminado!',
-              icon: 'success',
-            });
-          },
-        });
+        this.coursesService
+          .deleteCourseById(id, this.currentPage, this.pageSize)
+          .subscribe({
+            next: (courses) => {
+              this.courses = courses.data;
+              Swal.fire({
+                title: 'Curso eliminado!',
+                icon: 'success',
+              }).finally(() => location.reload());
+            },
+          });
       }
     });
   }
@@ -124,16 +158,18 @@ export class CoursesComponent {
   onView(course: CourseInterface) {
     this.matDialog
       .open(CourseDetailComponent, {
-        data: course.id,
+        data: [course.id, this.currentPage, this.pageSize],
       })
       .afterClosed()
       .subscribe({
         next: () =>
-          this.coursesService.getCourses().subscribe({
-            next: (courses) => {
-              this.courses = courses;
-            },
-          }),
+          this.coursesService
+            .getCourses(this.currentPage, this.pageSize)
+            .subscribe({
+              next: (courses) => {
+                this.courses = courses.data;
+              },
+            }),
       });
   }
 }

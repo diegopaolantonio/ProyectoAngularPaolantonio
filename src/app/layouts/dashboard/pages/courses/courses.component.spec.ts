@@ -5,54 +5,66 @@ import { MockProvider } from 'ng-mocks';
 import { of } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
 import { appReducers } from '../../../../core/store';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { Pagination } from '../../../../core/models/index';
+import { CourseInterface } from './models/index';
 
 describe('Pruebas de CoursesComponent', () => {
   let coursesComponent: CoursesComponent;
+
+  const coursesResponse = {
+    first: 1,
+    prev: null,
+    next: null,
+    last: 1,
+    pages: 1,
+    items: 3,
+    data: [
+      {
+        code: 'ABCD1234',
+        name: 'Analisis Matematico 1',
+        hours: 1,
+        classes: 10,
+        teacher: 'Juan',
+        startDate: new Date('2024-02-05T03:00:00.000Z'),
+        finishDate: new Date('2024-07-15T03:00:00.000Z'),
+        price: 25350,
+        id: 'a02c',
+      },
+      {
+        code: 'AB12CD34',
+        name: 'Fisica 1',
+        hours: 2,
+        classes: 20,
+        teacher: 'Pedro',
+        startDate: new Date('2024-02-13T03:00:00.000Z'),
+        finishDate: new Date('2024-07-23T03:00:00.000Z'),
+        price: 20500,
+        id: '5e25',
+      },
+      {
+        code: 'CDCD3412_2',
+        name: 'Algebra 1',
+        hours: 3,
+        classes: 30,
+        teacher: 'Alberto',
+        startDate: new Date('2024-03-01T03:00:00.000Z'),
+        finishDate: new Date('2024-11-30T03:00:00.000Z'),
+        price: 50700,
+        id: '1541',
+      },
+    ],
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [CoursesComponent],
       providers: [
         MockProvider(CoursesService, {
-          getCourses: () =>
-            of([
-              {
-                code: 'ABCD1234',
-                name: 'Analisis Matematico 1',
-                hours: 1,
-                classes: 10,
-                teacher: 'Juan',
-                startDate: new Date('2024-02-05T03:00:00.000Z'),
-                finishDate: new Date('2024-07-15T03:00:00.000Z'),
-                price: 25350,
-                id: 'a02c',
-              },
-              {
-                code: 'AB12CD34',
-                name: 'Fisica 1',
-                hours: 2,
-                classes: 20,
-                teacher: 'Pedro',
-                startDate: new Date('2024-02-13T03:00:00.000Z'),
-                finishDate: new Date('2024-07-23T03:00:00.000Z'),
-                price: 20500,
-                id: '5e25',
-              },
-              {
-                code: 'CDCD3412_2',
-                name: 'Algebra 1',
-                hours: 3,
-                classes: 30,
-                teacher: 'Alberto',
-                startDate: new Date('2024-03-01T03:00:00.000Z'),
-                finishDate: new Date('2024-11-30T03:00:00.000Z'),
-                price: 50700,
-                id: '1541',
-              },
-            ]),
+          getCourses: (page: 1, perPage: 10) => of(coursesResponse),
         }),
       ],
-      imports: [StoreModule.forRoot(appReducers, {})],
+      imports: [StoreModule.forRoot(appReducers, {}), MatPaginatorModule],
     });
     coursesComponent =
       TestBed.createComponent(CoursesComponent).componentInstance;

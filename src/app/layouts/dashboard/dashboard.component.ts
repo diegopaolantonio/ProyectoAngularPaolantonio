@@ -32,23 +32,24 @@ export class DashboardComponent {
         user?.profile.toUpperCase() === 'ADMIN'
           ? (this.adminUser = true)
           : (this.adminUser = false),
-        user?.profile.toUpperCase() === 'ADMIN' || user?.profile.toUpperCase() === 'USER'
-        ? (this.userUser = true)
-        : (this.userUser = false)
-      }
+          user?.profile.toUpperCase() === 'ADMIN' ||
+          user?.profile.toUpperCase() === 'USER'
+            ? (this.userUser = true)
+            : (this.userUser = false);
+      },
     });
 
     this.tittle$ = this.store.select(selectActiveSection);
 
     this.tittle$.subscribe({
-      next: (tittle) => this.tittle = tittle.toUpperCase()
-    })
+      next: (tittle) => (this.tittle = tittle.toUpperCase()),
+    });
   }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.dataLoadingDone = true;
-    })
+    });
   }
 
   onLogout() {

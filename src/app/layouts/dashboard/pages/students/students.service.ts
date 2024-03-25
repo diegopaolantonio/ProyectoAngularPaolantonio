@@ -9,23 +9,26 @@ import { catchError, finalize, of } from 'rxjs';
   providedIn: 'root',
 })
 export class StudentsService {
-  constructor(private loadingService: LoadingService, private httpClient: HttpClient) {}
+  constructor(
+    private loadingService: LoadingService,
+    private httpClient: HttpClient
+  ) {}
 
   getStudents() {
     this.loadingService.setIsLoading(true);
 
-    return this.httpClient.get<StudentInterface[]>(
-      `${environment.apiURL}/students`
-    ).pipe(
-      // delay(1000),
-      finalize(() => {
-        this.loadingService.setIsLoading(false);
-      }),
-      catchError((error) => {
-        alert(`Error al cargar los estudiantes, ${error.statusText}`);
-        return of([]);
-      })
-    );;
+    return this.httpClient
+      .get<StudentInterface[]>(`${environment.apiURL}/students`)
+      .pipe(
+        // delay(1000),
+        finalize(() => {
+          this.loadingService.setIsLoading(false);
+        }),
+        catchError((error) => {
+          alert(`Error al cargar los estudiantes, ${error.statusText}`);
+          return of([]);
+        })
+      );
   }
 
   getStudentsById(studentId: string) {

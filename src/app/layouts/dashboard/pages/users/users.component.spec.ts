@@ -5,57 +5,67 @@ import { UsersService } from './users.service';
 import { of } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
 import { appReducers } from '../../../../core/store';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 describe('Pruebas de UsersComponent', () => {
   let usersComponent: UsersComponent;
+
+  const usersResponse = {
+    first: 1,
+    prev: null,
+    next: null,
+    last: 1,
+    pages: 1,
+    items: 3,
+    data: [
+      {
+        id: 'id1',
+        dni: 1,
+        email: 'Fake1@mail.com',
+        firstName: 'FakeFirstName1',
+        lastName: 'FakeLastName1',
+        address: 'FakeAddress1',
+        phone: '1',
+        password: 'FakePassword1',
+        profile: 'Admin',
+        userToken: 'FakeToken1',
+      },
+      {
+        id: 'id2',
+        dni: 2,
+        email: 'Fake2@mail.com',
+        firstName: 'FakeFirstName2',
+        lastName: 'FakeLastName2',
+        address: 'FakeAddress2',
+        phone: '2',
+        password: 'FakePassword2',
+        profile: 'Admin',
+        userToken: 'FakeToken2',
+      },
+      {
+        id: 'id3',
+        dni: 3,
+        email: 'Fake3@mail.com',
+        firstName: 'FakeFirstName3',
+        lastName: 'FakeLastName3',
+        address: 'FakeAddress3',
+        phone: '3',
+        password: 'FakePassword3',
+        profile: 'Admin',
+        userToken: 'FakeToken3',
+      },
+    ],
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [UsersComponent],
       providers: [
         MockProvider(UsersService, {
-          getUsers: () =>
-            of([
-              {
-                id: 'id1',
-                dni: 1,
-                email: 'Fake1@mail.com',
-                firstName: 'FakeFirstName1',
-                lastName: 'FakeLastName1',
-                address: 'FakeAddress1',
-                phone: '1',
-                password: 'FakePassword1',
-                profile: 'Admin',
-                userToken: 'FakeToken1',
-              },
-              {
-                id: 'id2',
-                dni: 2,
-                email: 'Fake2@mail.com',
-                firstName: 'FakeFirstName2',
-                lastName: 'FakeLastName2',
-                address: 'FakeAddress2',
-                phone: '2',
-                password: 'FakePassword2',
-                profile: 'Admin',
-                userToken: 'FakeToken2',
-              },
-              {
-                id: 'id3',
-                dni: 3,
-                email: 'Fake3@mail.com',
-                firstName: 'FakeFirstName3',
-                lastName: 'FakeLastName3',
-                address: 'FakeAddress3',
-                phone: '3',
-                password: 'FakePassword3',
-                profile: 'Admin',
-                userToken: 'FakeToken3',
-              },
-            ]),
+          getUsers: (page: 1, perPage: 10) => of(usersResponse),
         }),
       ],
-      imports: [StoreModule.forRoot(appReducers, {})],
+      imports: [StoreModule.forRoot(appReducers, {}), MatPaginatorModule],
     });
     usersComponent = TestBed.createComponent(UsersComponent).componentInstance;
   });

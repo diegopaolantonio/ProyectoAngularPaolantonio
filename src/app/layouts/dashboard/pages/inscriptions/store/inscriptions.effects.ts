@@ -118,7 +118,7 @@ export class InscriptionsEffects {
     return this.actions$.pipe(
       ofType(InscriptionsActions.loadCourses),
       concatMap(() =>
-        this.coursesService.getCourses().pipe(
+        this.coursesService.getAllCourses().pipe(
           map((courses) => InscriptionsActions.loadCoursesSuccess({ courses })),
           catchError((error) =>
             of(InscriptionsActions.loadCoursesFailure({ error }))

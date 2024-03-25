@@ -14,23 +14,28 @@ import { LoadingService } from '../../../../core/services/loading.service';
   providedIn: 'root',
 })
 export class InscriptionsService {
-  constructor(private loadingService: LoadingService, private httpClient: HttpClient) {}
+  constructor(
+    private loadingService: LoadingService,
+    private httpClient: HttpClient
+  ) {}
 
   getInscriptions() {
     this.loadingService.setIsLoading(true);
 
-    return this.httpClient.get<InscriptionInterface[]>(
-      `${environment.apiURL}/inscriptions?_embed=student&_embed=course`
-    ).pipe(
-      // delay(1000),
-      finalize(() => {
-        this.loadingService.setIsLoading(false);
-      }),
-      catchError((error) => {
-        alert(`Error al cargar las inscripciones, ${error.statusText}`);
-        return of([]);
-      })
-    );;
+    return this.httpClient
+      .get<InscriptionInterface[]>(
+        `${environment.apiURL}/inscriptions?_embed=student&_embed=course`
+      )
+      .pipe(
+        // delay(1000),
+        finalize(() => {
+          this.loadingService.setIsLoading(false);
+        }),
+        catchError((error) => {
+          alert(`Error al cargar las inscripciones, ${error.statusText}`);
+          return of([]);
+        })
+      );
   }
 
   getInscriptionsByStudentId(studentId: string) {

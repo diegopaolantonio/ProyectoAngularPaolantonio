@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { UserInterface } from './models/index';
 import { UsersService } from './users.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
 import { Store } from '@ngrx/store';
 import { DashboardActions } from '../../store/dashboard.actions';
+import { PageEvent } from '@angular/material/paginator';
+import { Pagination } from '../../../../core/models/index';
 
 @Component({
   selector: 'app-users',
@@ -25,19 +27,41 @@ export class UsersComponent {
   ];
 
   users: UserInterface[] = [];
+  totalItems = 0;
+  pageSize = 5;
+  currentPage = 1;
 
   constructor(
     private usersService: UsersService,
     public matDialog: MatDialog,
     private store: Store
   ) {
-    this.usersService.getUsers().subscribe({
-      next: (users) => {
-        this.users = users;
+    this.getPageData();
+    this.store.dispatch(DashboardActions.activeSection({ tittle: 'Usuarios' }));
+  }
+
+  ngOnInit(): void {
+    this.getPageData();
+  }
+
+  getPageData(): void {
+    this.usersService.getUsers(this.currentPage, this.pageSize).subscribe({
+      next: (paginationResult: Pagination<UserInterface[]>) => {
+        this.totalItems = paginationResult.items;
+        this.users = paginationResult.data;
       },
     });
+  }
 
-    this.store.dispatch(DashboardActions.activeSection({ tittle: 'Usuarios' }));
+  onPage(ev: PageEvent) {
+    this.currentPage = ev.pageIndex + 1;
+    this.pageSize = ev.pageSize;
+    this.usersService.getUsers(this.currentPage, this.pageSize).subscribe({
+      next: (paginateResult: Pagination<UserInterface[]>) => {
+        this.totalItems = paginateResult.items;
+        this.users = paginateResult.data;
+      },
+    });
   }
 
   onCreate(): void {
@@ -52,15 +76,17 @@ export class UsersComponent {
           });
           if (user) {
             if (!this.dniExists) {
-              this.usersService.createUser(user).subscribe({
-                next: (users) => {
-                  this.users = users;
-                  Swal.fire({
-                    icon: 'success',
-                    title: 'Usuario creado',
-                  });
-                },
-              });
+              this.usersService
+                .createUser(user, this.currentPage, this.pageSize)
+                .subscribe({
+                  next: (users) => {
+                    this.users = users.data;
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Usuario creado',
+                    }).finally(() => location.reload());
+                  },
+                });
             } else {
               Swal.fire({
                 icon: 'error',
@@ -81,15 +107,17 @@ export class UsersComponent {
       .subscribe({
         next: (result) => {
           if (result) {
-            this.usersService.updateUserById(user.id, result).subscribe({
-              next: (users) => {
-                this.users = users;
-                Swal.fire({
-                  icon: 'success',
-                  title: 'Usuario modificado',
-                });
-              },
-            });
+            this.usersService
+              .updateUserById(user.id, result, this.currentPage, this.pageSize)
+              .subscribe({
+                next: (users) => {
+                  this.users = users.data;
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Usuario modificado',
+                  });
+                },
+              });
           }
         },
       });
@@ -98,16 +126,18 @@ export class UsersComponent {
   onView(user: UserInterface) {
     this.matDialog
       .open(UserDetailComponent, {
-        data: user.id,
+        data: [user.id, this.currentPage, this.pageSize],
       })
       .afterClosed()
       .subscribe({
         next: () =>
-          this.usersService.getUsers().subscribe({
-            next: (users) => {
-              this.users = users;
-            },
-          }),
+          this.usersService
+            .getUsers(this.currentPage, this.pageSize)
+            .subscribe({
+              next: (users) => {
+                this.users = users.data;
+              },
+            }),
       });
   }
 
@@ -121,15 +151,17 @@ export class UsersComponent {
       confirmButtonText: 'Si',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.usersService.deleteUserById(id).subscribe({
-          next: (users) => {
-            this.users = users;
-            Swal.fire({
-              title: 'Usuario eliminado!',
-              icon: 'success',
-            });
-          },
-        });
+        this.usersService
+          .deleteUserById(id, this.currentPage, this.pageSize)
+          .subscribe({
+            next: (users) => {
+              this.users = users.data;
+              Swal.fire({
+                title: 'Usuario eliminado!',
+                icon: 'success',
+              }).finally(() => location.reload());
+            },
+          });
       }
     });
   }

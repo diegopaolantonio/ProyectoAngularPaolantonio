@@ -31,16 +31,22 @@ export class UserDetailComponent {
     profile: '',
     userToken: '',
   };
+  viewUserId: string;
+  currentPage: number;
+  pageSize: number;
 
   constructor(
     private usersService: UsersService,
     private httpClient: HttpClient,
     private matDialog: MatDialog,
     private matDialogRef: MatDialogRef<UserDetailComponent>,
-    @Inject(MAT_DIALOG_DATA) private viewUserId: string
+    @Inject(MAT_DIALOG_DATA) private data: Array<any>
   ) {
+    this.viewUserId = data[0];
+    this.currentPage = data[1];
+    this.pageSize = data[2];
     this.user$ = this.httpClient.get<UserInterface[]>(
-      `${environment.apiURL}/users?id=${viewUserId}`
+      `${environment.apiURL}/users?id=${this.viewUserId}`
     );
     this.user$.subscribe({
       next: (response) => {
@@ -58,16 +64,18 @@ export class UserDetailComponent {
       .subscribe({
         next: (result) => {
           if (result) {
-            this.usersService.updateUserById(user.id, result).subscribe({
-              next: (users) => {
-                Swal.fire({
-                  icon: 'success',
-                  title: 'Usuario modificado',
-                }).then(() => {
-                  this.matDialogRef.close(users);
-                });
-              },
-            });
+            this.usersService
+              .updateUserById(user.id, result, this.currentPage, this.pageSize)
+              .subscribe({
+                next: (users) => {
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Usuario modificado',
+                  }).then(() => {
+                    this.matDialogRef.close(users);
+                  });
+                },
+              });
           }
         },
       });
@@ -83,15 +91,18 @@ export class UserDetailComponent {
       confirmButtonText: 'Si',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.usersService.deleteUserById(userId).subscribe({
-          next: (users) => {
-            Swal.fire({ title: 'Usuario eliminado!', icon: 'success' }).then(
-              () => {
-                this.matDialogRef.close(users);
-              }
-            );
-          },
-        });
+        this.usersService
+          .deleteUserById(userId, this.currentPage, this.pageSize)
+          .subscribe({
+            next: (users) => {
+              Swal.fire({ title: 'Usuario eliminado!', icon: 'success' }).then(
+                () => {
+                  this.matDialogRef.close(users);
+                  location.reload();
+                }
+              );
+            },
+          });
       }
     });
   }

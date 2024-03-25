@@ -15,6 +15,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
 import { ValidationErrorsPipe } from './validation-errors.pipe';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [FullNamePipe, FontSizeDirective, ValidationErrorsPipe],
@@ -36,6 +37,7 @@ import { ValidationErrorsPipe } from './validation-errors.pipe';
     MatNativeDateModule,
     MatCardModule,
     ValidationErrorsPipe,
+    MatPaginatorModule,
   ],
 })
 export class SharedModule {}
